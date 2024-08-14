@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Catppuccin Macchiato",
     "explorer.confirmDragAndDrop": false,
     "azureFunctions.showPythonVenvWarning": false,
     "terminal.integrated.defaultProfile.osx": "zsh",
@@ -10,7 +9,7 @@
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
     "editor.stickyScroll.enabled": false,
-    "editor.lineNumbers": "relative",
+    // "editor.lineNumbers": "relative",
     "git.openRepositoryInParentFolders": "never",
     "terminal.integrated.env.osx": {
         "PATH": ""
@@ -23,6 +22,7 @@
         },
         "editor.defaultFormatter": "charliermarsh.ruff" // Set Ruff as the default formatter
     },
+    "python.analysis.typeCheckingMode": "basic",
     "vim.visualModeKeyBindingsNonRecursive": [
         {
             "before": [
@@ -59,12 +59,12 @@
         "*.json": "json",
         "*.lua": "lua",
         "*.yml": "yaml",
-        "*.psql": "sql"
+        "*.psql": "sql",
+        "*.env": "shellscript"
     },
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "ruff.nativeServer": true,
     "ruff.configurationPreference": "filesystemFirst",
     "Lua.format.defaultConfig": {
         "indent_style": "space",
@@ -91,4 +91,7 @@
         }
     ],
     "editor.minimap.enabled": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "ruff.nativeServer": true,
 }

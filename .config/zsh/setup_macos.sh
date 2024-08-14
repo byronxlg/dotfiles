@@ -27,6 +27,8 @@ packages=(
     # Other
 	'wget'
 	'lazygit'
+	'jq'
+	'grep'
 )
 
 # Install with Homebrew
