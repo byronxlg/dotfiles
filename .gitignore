@@ -1,3 +1,4 @@
 machine.zsh
 ruff_cache
 .vscode
+.config/iterm2

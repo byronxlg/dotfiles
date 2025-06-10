@@ -1,97 +1,157 @@
 {
-    "explorer.confirmDragAndDrop": false,
-    "azureFunctions.showPythonVenvWarning": false,
-    "terminal.integrated.defaultProfile.osx": "zsh",
-    "win-ca.inject": "append",
-    "explorer.confirmDelete": false,
-    "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "editor.unicodeHighlight.invisibleCharacters": false,
-    "editor.defaultFormatter": "charliermarsh.ruff",
+    // Editor
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.accessibilitySupport": "off",
+    "editor.autoIndent": "advanced",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.organizeImports": "always",
+        "source.sortMembers": "always"
+    },
+    "editor.codeLensFontSize": 10,
+    "editor.cursorSmoothCaretAnimation": "off",
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "line",
+    "editor.formatOnSaveMode": "file",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.foldingStrategy": "auto",
+    "editor.fontFamily": "Menlo, Monaco, monospace, 'JetBrainsMono Nerd Font'",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.fontWeight": 400,
     "editor.formatOnSave": true,
-    "editor.stickyScroll.enabled": false,
-    // "editor.lineNumbers": "relative",
-    "git.openRepositoryInParentFolders": "never",
-    "terminal.integrated.env.osx": {
-        "PATH": ""
-    },
-    "[python]": {
-        "editor.formatOnSave": true, // Format Python file code on save
-        "editor.codeActionsOnSave": {
-            "source.fixAll": "explicit", // On save, fix as many linting issues as possible
-            "source.organizeImports": "explicit" // On save, organize imports (needs "I" rule in Ruff configuration)
-        },
-        "editor.defaultFormatter": "charliermarsh.ruff" // Set Ruff as the default formatter
-    },
-    "python.analysis.typeCheckingMode": "basic",
-    "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "J"
-            ],
-            "commands": [
-                "editor.action.moveLinesDownAction"
-            ]
-        }, // moveLineDown
-        {
-            "before": [
-                "K"
-            ],
-            "commands": [
-                "editor.action.moveLinesUpAction"
-            ]
-        } // moveLineUp
-    ],
-    "github.copilot.editor.enableAutoCompletions": true,
-    "workbench.sideBar.location": "right",
-    "python.createEnvironment.trigger": "off",
-    "bicep.enableSurveys": false,
-    "github-actions.workflows.pinned.workflows": [],
-    "prettier.tabWidth": 4,
-    "[github-actions-workflow]": {},
-    "editor.fontSize": 12,
-    "terminal.integrated.fontSize": 12,
-    "workbench.settings.applyToAllProfiles": [
-        "terminal.integrated.fontFamily"
-    ],
-    "editor.fontFamily": "JetBrainsMono Nerd Font Mono",
-    "explorer.confirmPasteNative": false,
-    "files.associations": {
-        "*.json": "json",
-        "*.lua": "lua",
-        "*.yml": "yaml",
-        "*.psql": "sql",
-        "*.env": "shellscript"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "ruff.configurationPreference": "filesystemFirst",
-    "Lua.format.defaultConfig": {
-        "indent_style": "space",
-        "indent_size": "4"
-    },
-    "prettier.documentSelectors": [
-        "**/*.{ts,js,yml,yaml}",
-        "**/*.{html,css}"
-    ],
-    "prettier.configPath": ".prettierrc",
-    "[yaml]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "ruff.lint.run": "onSave",
-    "ruff.trace.server": "verbose",
-    "snowflake.connectionsConfigFile": "/Users/byronsmith/.snowflake/connections.toml",
-    "[snowflake-sql]": {},
-    "pgsql.connections": [
-        {
-            "server": "{{put-server-name-here}}",
-            "database": "{{put-database-name-here}}",
-            "user": "{{put-username-here}}",
-            "password": "{{put-password-here}}"
-        }
-    ],
+    "editor.gotoLocation.multipleDeclarations": "peek",
+    "editor.gotoLocation.multipleDefinitions": "peek",
+    "editor.gotoLocation.multipleImplementations": "peek",
+    "editor.gotoLocation.multipleReferences": "peek",
+    "editor.gotoLocation.multipleTypeDefinitions": "peek",
+    "editor.guides.bracketPairs": false,
+    "editor.guides.indentation": false,
+    "editor.inlineSuggest.enabled": true,
+    "editor.insertSpaces": true,
+    "editor.lineHeight": 23,
+    "editor.linkedEditing": true,
     "editor.minimap.enabled": false,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.renderControlCharacters": true,
+    "editor.renderLineHighlight": "line",
+    "editor.guides.highlightActiveBracketPair": false,
+    "editor.renderWhitespace": "selection",
+    "editor.renderFinalNewline": "dimmed",
+    "editor.rulers": [],
+    "editor.scrollBeyondLastLine": true,
+    "editor.stickyScroll.enabled": false,
+    "editor.showFoldingControls": "always",
+    "editor.snippetSuggestions": "top",
+    "editor.suggest.localityBonus": true,
+    "editor.suggest.preview": true,
+    "editor.suggest.showStatusBar": true,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.tabCompletion": "on",
+    "editor.tabSize": 4,
+    "editor.unfoldOnClickAfterEndOfLine": true,
+    "editor.wordWrap": "off",
+    // Explorer
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.autoOpenDroppedFile": false,
+    "explorer.compactFolders": false,
+    // Files
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 6000,
+    "files.simpleDialog.enable": true,
+    "files.trimTrailingWhitespace": true,
+    // Search
+    "search.collapseResults": "auto",
+    "search.followSymlinks": false,
+    "search.quickOpen.includeSymbols": false,
+    "search.showLineNumbers": true,
+    "search.smartCase": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/.venv": true
+    },
+    // Terminal
+    "terminal.integrated.lineHeight": 1.2,
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontWeight": 300,
+    "terminal.integrated.minimumContrastRatio": 1,
+    "terminal.integrated.scrollback": 12000,
+    "terminal.integrated.cursorStyle": "block",
+    "terminal.integrated.profiles.osx": {
+        "x86 zsh": {
+            "path": "/usr/bin/arch",
+            "args": ["-arch", "x86_64", "/bin/zsh"]
+        }
+    },
+    // Window
+    "window.autoDetectColorScheme": true,
+    "window.title": "${rootPath}",
+    "window.newWindowProfile": "Default",
+    // Workbench
+    "workbench.preferredDarkColorTheme": "Catppuccin Mocha",
+    "workbench.colorCustomizations": {
+        "[Default Dark+]": {
+            "editor.lineHighlightBackground": "#3d8bc34f",
+            "editor.lineHighlightBorder": "#deeeee1f",
+            "editorBracketMatch.background": "#2b363e1b",
+            "editorBracketMatch.border": "#10dde148"
+        }
+    },
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "workbench.commandPalette.preserveInput": true,
+    "workbench.editor.closeOnFileDelete": false,
+    "workbench.editor.decorations.badges": true,
+    "workbench.editor.decorations.colors": true,
+    "workbench.editor.empty.hint": "hidden",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 20,
+    "workbench.editor.openSideBySideDirection": "down",
+    "workbench.editor.revealIfOpen": true,
+    "workbench.editor.wrapTabs": false,
+    "workbench.fontAliasing": "antialiased",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Catppuccin Mocha",
-    "ruff.nativeServer": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "workbench.statusBar.visible": true,
+    "workbench.sideBar.location": "right",
+    ///////////////////////
+    // Language Specific //
+    ///////////////////////
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    },
+    "[sql]": {
+        "editor.defaultFormatter": "mtxr.sqltools"
+    },
+    //////////////////////
+    //    Extensions    //
+    //////////////////////
+    "extensions.ignoreRecommendations": true,
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    // Ruff
+    "ruff.nativeServer": "auto",
+    "ruff.configurationPreference": "filesystemFirst",
+    "ruff.importStrategy": "useBundled",
+    "ruff.configuration": "/Users/byronsmith/.config/ruff/ruff.toml",
+    // Prettier
+    "prettier.tabWidth": 4,
+    "prettier.trailingComma": "all",
+    "files.associations": {
+        "*.json": "jsonc",
+        "*.css": "tailwindcss",
+        "*.sql": "sql",
+        "yabairc": "shellscript"
+    },
+    // SQLTools
+    "sqltools.results.customization": {},
+    "sqltools.results.reuseTabs": "connection",
+    // Other
+    "git.openRepositoryInParentFolders": "never",
+    "vsicons.dontShowNewVersionMessage": true
 }
