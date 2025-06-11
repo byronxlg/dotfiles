@@ -25,6 +25,11 @@ packages=(
 	'lua'
 	'luarocks'
 
+	# Development
+	docker
+	postgresql@14
+	python@3.12
+
     # Other
 	'wget'
 	'lazygit'
