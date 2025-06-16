@@ -34,5 +34,6 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^QuickTime Player$" manage=off
 yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^Microsoft Azure Storage Explorer$" manage=off
+yabai -m rule --add app="^iTerm2$" manage=off
 
 
