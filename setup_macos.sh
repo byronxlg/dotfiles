@@ -27,6 +27,7 @@ packages=(
 
 	# Development
 	docker
+	docker-compose
 	postgresql@14
 	python@3.12
 
