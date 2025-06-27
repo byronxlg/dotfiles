@@ -22,3 +22,8 @@ chmod +x ./setup_macos.sh && ./setup_macos.sh
 ## Lazy.Nvim
 
 -   [lazy.nvim](https://lazy.folke.io/)
+
+## Fixes
+
+-   Bat
+    -   Run `bat cache --build` to resolve `[bat warning]: Unknown theme 'Catppuccin Mocha', using default.`
