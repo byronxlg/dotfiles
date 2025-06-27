@@ -40,6 +40,8 @@ export LS_COLORS="$(vivid generate catppuccin-mocha)"
 
 # PATH
 PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 
 # Source zshrc
 alias restart-zsh='source ~/.zshrc'
