@@ -17,7 +17,7 @@
     "editor.formatOnSaveMode": "file",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.foldingStrategy": "auto",
-    "editor.fontFamily": "Menlo, Monaco, monospace, 'JetBrainsMono Nerd Font'",
+    "editor.fontFamily": "Menlo, Monaco, monospace, 'JetBrainsMono Nerd Font'", // Downlod here: https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
     "editor.fontLigatures": true,
     "editor.fontSize": 14,
     "editor.fontWeight": 400,
