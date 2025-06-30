@@ -1,3 +1,6 @@
 machine.zsh
 ruff_cache
+.vscode
 .config/iterm2
+.config/fish
+.config/uv

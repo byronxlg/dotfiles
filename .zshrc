@@ -31,8 +31,10 @@ done
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
+# Shell Completions
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+eval "$(uv generate-shell-completion zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Set default colours
@@ -45,3 +47,4 @@ PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # Source zshrc
 alias restart-zsh='source ~/.zshrc'
+
