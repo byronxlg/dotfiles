@@ -26,6 +26,7 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "*.ipynb"
 ]
 extend-exclude = ["env"]
 indent-width = 4
@@ -93,12 +94,14 @@ select = [
 
 ]
 
-ignore = ["TD004", "ANN101", "ANN102", "FA102"]
+ignore = [
+    "ANN101",  # Ignore missing type annotation for self in methods
+    "ANN102",  # Ignore missing type annotation for cls in classmethods
+    "FA102",   # Ignore future-annotations for __future__ import not at top of file
+]
 
 fixable = ["ALL"]
-unfixable = [
-    "F401", # Do not fixed unused imports
-]
+unfixable = []
 
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
