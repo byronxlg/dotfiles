@@ -31,14 +31,9 @@ done
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-# Shell Completions
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
-eval "$(uv generate-shell-completion zsh)"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Set default colours
+# Set colours
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
+
 
 # vscode / starship fix to remove extra venv label
 export VIRTUAL_ENV_DISABLE_PROMPT=1
@@ -46,6 +41,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 # PATH
 PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 
 
 # Source zshrc

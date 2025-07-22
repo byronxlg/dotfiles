@@ -1,6 +1,5 @@
 # Overrides for Plugins
 alias cat='bat'
-alias vi='nvim'
 
 alias ls='lsd'
 
@@ -17,5 +16,4 @@ alias la='ls -a'
 alias lsa='ls -la'
 alias lt='ls --tree'
 
-# Pip
-alias pip='noglob pip'
+alias jq='jq --color-output'

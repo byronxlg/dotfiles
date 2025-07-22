@@ -98,6 +98,7 @@ ignore = [
     "ANN101",  # Ignore missing type annotation for self in methods
     "ANN102",  # Ignore missing type annotation for cls in classmethods
     "FA102",   # Ignore future-annotations for __future__ import not at top of file
+    "TC001",  # Ignore type comments
 ]
 
 fixable = ["ALL"]
