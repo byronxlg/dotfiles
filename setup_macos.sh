@@ -22,7 +22,7 @@ packages=(
 
 
     # Neovim and dependencies
-	'neovim'
+	'nvim':
 	'lua'
 	'luarocks'
 
@@ -38,6 +38,7 @@ packages=(
 	'wget'
 	'lazygit'
 	'jq'
+	'rg'
 	'grep'
 )
 
