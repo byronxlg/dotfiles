@@ -120,7 +120,7 @@ format = " [$symbol$account(@$domain)(\\($region\\))]($style)"
 
 [git_branch]
 format = ' [$symbol$branch(:$remote_branch)]($style)'
-truncation_length = 8
+truncation_length = 30
 
 [git_commit]
 format = " [\\($hash$tag\\)]($style)"
