@@ -8,10 +8,11 @@ palette = "catppuccin_mocha"
 add_newline = true
 format = """
 $directory\
+$git_branch $git_status\
 $line_break\
 $character
 """
-right_format = """$all"""
+# right_format = """$all"""
 
 [aws]
 symbol = "  "
