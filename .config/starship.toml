@@ -9,6 +9,7 @@ add_newline = true
 format = """
 $directory\
 $git_branch $git_status\
+$all\
 $line_break\
 $character
 """
