@@ -201,6 +201,7 @@ format = " [$symbol$state( \\($name\\))]($style)"
 [nodejs]
 symbol = " "
 format = " [$symbol($version)]($style)"
+disabled = true
 
 [ocaml]
 format = " [$symbol($version )(\\($switch_indicator$switch_name\\))]($style)"
