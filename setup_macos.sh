@@ -30,9 +30,9 @@ packages=(
 	docker
 	docker-compose
 	postgresql@14
-	python@3.12
+	python@3.14
 	uv
-	node
+	# node
 
     # Other
 	'wget'
