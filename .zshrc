@@ -1,3 +1,4 @@
+#!/bin/bash
 autoload -Uz compinit && compinit
 
 unsetopt beep
@@ -42,8 +43,8 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-
-
 # Source zshrc
 alias restart-zsh='source ~/.zshrc'
 
+# Run local zshrc if it exists
+[ -f ~/.local_zshrc.sh ] && source ~/.local_zshrc.sh
