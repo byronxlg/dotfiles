@@ -1,3 +1,4 @@
+#!/bin/bash
 packages=(
     # Zsh
 	'zsh-autosuggestions'
@@ -44,7 +45,7 @@ packages=(
 
 # Install with Homebrew
 for package in "${packages[@]}"; do
-    brew install $package
+    brew install "$package"
 done
 
 # Casks
