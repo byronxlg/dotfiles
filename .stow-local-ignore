@@ -24,4 +24,8 @@ CVS
 tools
 assets
 \.stowrc
-macos_settings.sh
+
+# Other
+
+setup_macos.sh
+README.md
