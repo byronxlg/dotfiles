@@ -23,7 +23,7 @@ packages=(
 
 
     # Neovim and dependencies
-	'nvim':
+	'nvim'
 	'lua'
 	'luarocks'
 
