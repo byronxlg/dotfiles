@@ -6,3 +6,4 @@ ruff_cache
 .config/uv
 .config/containers
 .local_zshrc.sh
+.DS_Store

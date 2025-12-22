@@ -42,6 +42,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 # PATH
 PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+PATH="$HOME/.local/bin:$PATH"
 
 # Source zshrc
 alias restart-zsh='source ~/.zshrc'
