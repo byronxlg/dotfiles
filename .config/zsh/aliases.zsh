@@ -19,3 +19,6 @@ alias lsa='ls -la'
 alias lt='ls --tree'
 
 alias jq='jq --color-output'
+
+# TMUX project launcher
+alias tmux-project='[[ -f .tmux-session.sh ]] && bash .tmux-session.sh || echo "No .tmux-session.sh found"'
