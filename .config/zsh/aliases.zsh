@@ -22,3 +22,10 @@ alias jq='jq --color-output'
 
 # TMUX project launcher
 alias tmux-project='[[ -f .tmux-session.sh ]] && bash .tmux-session.sh || echo "No .tmux-session.sh found"'
+
+s1# Claude code commands
+alias claude='claude --dangerously-skip-permissions'
+alias cl='claude'
+alias cq='claude --print'
+alias cc='claude --continue'
+alias cr='claude --resume'
