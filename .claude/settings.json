@@ -6,6 +6,6 @@
     "padding": 0
   },
   "env": {
-    "ENABLE_EXPERIMENTAL_MCP_CLIENT": "true"
+    "ENABLE_EXPERIMENTAL_MCP_CLI": "true"
   }
 }
