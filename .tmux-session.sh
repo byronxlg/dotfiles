@@ -18,8 +18,8 @@ echo "Creating new session '$SESSION_NAME'..."
 # Create new session (detached) with first window
 tmux new-session -d -s "$SESSION_NAME" -n editor
 
-# Window 1: Editor (Cursor and VSCode)
-tmux send-keys -t "$SESSION_NAME:editor" "cursor" C-m
+# Window 1: Editor (Claude and VSCode)
+tmux send-keys -t "$SESSION_NAME:editor" "claude" C-m
 
 
 # Window 2: Dev
