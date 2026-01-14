@@ -20,14 +20,14 @@ tmux new-session -d -s "$SESSION_NAME" -n editor
 
 # Window 1: Editor (Cursor and VSCode)
 tmux send-keys -t "$SESSION_NAME:editor" "cursor" C-m
-tmux split-window -h -t "$SESSION_NAME:editor" -p 50
 
-# Set hook to run code -r . in the same pane when switching to this session
-tmux set-hook -t "$SESSION_NAME" client-session-changed "send-keys -t $SESSION_NAME:editor.2 'code -r .' C-m"
 
 # Window 2: Dev
 tmux new-window -t "$SESSION_NAME" -n dev
 tmux send-keys -t "$SESSION_NAME:dev" "clear" C-m
+
+tmux split-window -h -t "$SESSION_NAME:dev" -p 30
+tmux set-hook -t "$SESSION_NAME" client-session-changed "send-keys -t $SESSION_NAME:dev.2 'code . -r' C-m"
 
 # Window 3: Git (lazygit)
 tmux new-window -t "$SESSION_NAME" -n git
