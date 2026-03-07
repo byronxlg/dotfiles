@@ -49,3 +49,10 @@ alias restart-zsh='source ~/.zshrc'
 
 # Run local zshrc if it exists
 [ -f ~/.local_zshrc.sh ] && source ~/.local_zshrc.sh
+
+# bun completions
+[ -s "/Users/byron.smith/.bun/_bun" ] && source "/Users/byron.smith/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
