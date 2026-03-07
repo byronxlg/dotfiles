@@ -26,12 +26,13 @@ tmux send-keys -t "$SESSION_NAME:editor" "claude" C-m
 tmux new-window -t "$SESSION_NAME" -n dev
 tmux send-keys -t "$SESSION_NAME:dev" "clear" C-m
 
-tmux split-window -h -t "$SESSION_NAME:dev" -p 30
-tmux set-hook -t "$SESSION_NAME" client-session-changed "send-keys -t $SESSION_NAME:dev.2 'code . -r' C-m"
-
 # Window 3: Git (lazygit)
 tmux new-window -t "$SESSION_NAME" -n git
-tmux send-keys -t "$SESSION_NAME:git" "lazygit" C-m
+tmux send-keys -t "$SESSION_NAME:git" "lazygit" C-4m
+
+# Window 4: VSCode
+tmux new-window -t "$SESSION_NAME" -n vscode
+tmux send-keys -t "$SESSION_NAME:vscode" "code . -r" C-m
 
 # Select the editor window to start
 tmux select-window -t "$SESSION_NAME:editor"
