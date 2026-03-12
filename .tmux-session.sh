@@ -28,7 +28,7 @@ tmux send-keys -t "$SESSION_NAME:dev" "clear" C-m
 
 # Window 3: Git (lazygit)
 tmux new-window -t "$SESSION_NAME" -n git
-tmux send-keys -t "$SESSION_NAME:git" "lazygit" C-4m
+tmux send-keys -t "$SESSION_NAME:git" "lazygit" C-m
 
 # Window 4: VSCode
 tmux new-window -t "$SESSION_NAME" -n vscode
