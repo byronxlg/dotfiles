@@ -19,7 +19,7 @@ echo "Creating new session '$SESSION_NAME'..."
 tmux new-session -d -s "$SESSION_NAME" -n editor
 
 # Window 1: Editor (Claude and VSCode)
-tmux send-keys -t "$SESSION_NAME:editor" "claude" C-m
+tmux send-keys -t "$SESSION_NAME:editor" "claude --dangerously-skip-permissions" C-m
 
 
 # Window 2: Dev
