@@ -18,8 +18,6 @@ packages=(
 
 	# MacOS
 	iterm2
-	koekeishiya/formulae/yabai # yabai --start-service / yabai --restart-service
-	koekeishiya/formulae/skhd  # skhd --start-service / skhd --restart-service
 
 
     # Neovim and dependencies
@@ -50,10 +48,6 @@ done
 
 # Casks
 brew install --cask ghostty
-
-# Start services
-# yabai --start-service
-# skhd --start-service
 
 # Setup scripts
 chmod +x setup/*
