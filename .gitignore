@@ -1,9 +1,2 @@
-machine.zsh
-ruff_cache
-.vscode
-.config/iterm2
-.config/fish
-.config/uv
-.config/containers
 .local_zshrc.sh
 .DS_Store
