@@ -1,5 +1,11 @@
 #!/bin/bash
-autoload -Uz compinit && compinit
+# compinit: run full audit only once a day; otherwise use the cached dump
+autoload -Uz compinit
+if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 
 unsetopt beep
 
@@ -25,7 +31,7 @@ zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:
 
 # Run all zsh files
 for file in $HOME/dotfiles/.config/zsh/*.zsh; do
-    source $(realpath $file)
+    source $file
 done
 
 # completion using arrow keys (based on history)

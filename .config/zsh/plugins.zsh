@@ -1,8 +1,10 @@
+HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/opt/homebrew}
+
 # ZSH Syntax Highlighting
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ZSH Auto Suggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Shell Completions
 eval "$(starship init zsh)"
