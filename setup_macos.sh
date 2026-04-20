@@ -20,11 +20,6 @@ packages=(
 	iterm2
 
 
-    # Neovim and dependencies
-	'nvim'
-	'lua'
-	'luarocks'
-
 	# Development
 	docker
 	docker-compose
