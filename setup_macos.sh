@@ -23,6 +23,7 @@ packages=(
 	'neovim'
 	'tree-sitter-cli'
 	'lua-language-server'
+	'stylua'
 
 	# Development
 	docker
