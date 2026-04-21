@@ -10,12 +10,32 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.scrolloff = 5
+
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.undofile = true
+
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+vim.opt.signcolumn = "yes:2"
+vim.opt.updatetime = 100
+
+vim.diagnostic.config({ virtual_text = true })
 
 require("lazy").setup({
   {
@@ -79,6 +99,61 @@ require("lazy").setup({
     end,
   },
   {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = { globals = { "vim" } },
+          },
+        },
+      })
+      vim.lsp.enable({ "lua_ls", "ruff" })
+    end,
+  },
+  {
+    "airblade/vim-gitgutter",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      {
+        "<leader>?",
+        function() require("which-key").show({ global = false }) end,
+        desc = "Buffer Local Keymaps (which-key)",
+      },
+    },
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+    version = "*",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      defaults = {
+        file_ignore_patterns = { "%.git/" },
+        mappings = {
+          i = {
+            ["<C-j>"] = "move_selection_next",
+            ["<C-k>"] = "move_selection_previous",
+          },
+        },
+      },
+      pickers = {
+        find_files = { hidden = true },
+      },
+    },
+    keys = {
+      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help tags" },
+    },
+  },
+  {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {},
@@ -102,6 +177,12 @@ require("lazy").setup({
 })
 
 vim.keymap.set("n", "-", "<cmd>Oil --float<cr>", { desc = "Open parent directory" })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = ev.buf, desc = "Go to definition" })
+  end,
+})
 
 -- If nvim is launched on a directory (e.g. `nvim .`), reopen oil as a float
 vim.api.nvim_create_autocmd("VimEnter", {

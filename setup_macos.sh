@@ -1,6 +1,6 @@
 #!/bin/bash
 packages=(
-    # Zsh
+  # Zsh
 	'zsh-autosuggestions'
 	'zsh-syntax-highlighting'
 	'starship'
@@ -22,6 +22,7 @@ packages=(
 	# Neovim
 	'neovim'
 	'tree-sitter-cli'
+	'lua-language-server'
 
 	# Development
 	docker
@@ -35,7 +36,7 @@ packages=(
 	'wget'
 	'lazygit'
 	'jq'
-	'rg'
+	'ripgrep'
 	'grep'
 )
 
