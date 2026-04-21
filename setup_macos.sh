@@ -19,6 +19,9 @@ packages=(
 	# MacOS
 	iterm2
 
+	# Neovim
+	'neovim'
+	'tree-sitter-cli'
 
 	# Development
 	docker
