@@ -1,5 +1,6 @@
 # Overrides for Plugins
 alias cat='bat'
+alias vi='nvim'
 alias ls='lsd'
 
 
