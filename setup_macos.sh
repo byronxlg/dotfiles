@@ -14,6 +14,7 @@ packages=(
 	'watch'
 	'lsd'
 	'vivid'
+	'yazi'
 	'zoxide'
 
 	# MacOS

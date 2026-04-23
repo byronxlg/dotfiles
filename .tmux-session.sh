@@ -18,9 +18,8 @@ echo "Creating new session '$SESSION_NAME'..."
 # Create new session (detached) with first window
 tmux new-session -d -s "$SESSION_NAME" -n editor
 
-# Window 1: Editor (Claude and VSCode)
+# Window 1: Editor (Claude)
 tmux send-keys -t "$SESSION_NAME:editor" "claude --dangerously-skip-permissions" C-m
-
 
 # Window 2: Dev
 tmux new-window -t "$SESSION_NAME" -n dev
@@ -29,10 +28,6 @@ tmux send-keys -t "$SESSION_NAME:dev" "clear" C-m
 # Window 3: Git (lazygit)
 tmux new-window -t "$SESSION_NAME" -n git
 tmux send-keys -t "$SESSION_NAME:git" "lazygit" C-m
-
-# Window 4: VSCode
-tmux new-window -t "$SESSION_NAME" -n vscode
-tmux send-keys -t "$SESSION_NAME:vscode" "code . -r" C-m
 
 # Select the editor window to start
 tmux select-window -t "$SESSION_NAME:editor"
