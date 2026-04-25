@@ -26,8 +26,8 @@ The Skills CLI (`npx skills`) is the package manager for the open agent skills e
 
 **Key commands:**
 
-- `npx skills find [query]` - Search for skills interactively or by keyword
-- `npx skills add <package>` - Install a skill from GitHub or other sources
+- `npx skills search [query] --json` - Search for skills by keyword (non-interactive)
+- `npx skills add <package> -a claude-code` - Install a skill for Claude Code
 - `npx skills check` - Check for skill updates
 - `npx skills update` - Update all installed skills
 
@@ -53,17 +53,19 @@ For example, top skills for web development include:
 
 ### Step 3: Search for Skills
 
-If the leaderboard doesn't cover the user's need, run the find command:
+If the leaderboard doesn't cover the user's need, run the search command:
 
 ```bash
-npx skills find [query]
+npx skills search [query] --json
 ```
+
+Always use `--json` to avoid interactive prompts that will hang in a non-interactive terminal.
 
 For example:
 
-- User asks "how do I make my React app faster?" -> `npx skills find react performance`
-- User asks "can you help me with PR reviews?" -> `npx skills find pr review`
-- User asks "I need to create a changelog" -> `npx skills find changelog`
+- User asks "how do I make my React app faster?" -> `npx skills search react performance --json`
+- User asks "can you help me with PR reviews?" -> `npx skills search pr review --json`
+- User asks "I need to create a changelog" -> `npx skills search changelog --json`
 
 ### Step 4: Verify Quality Before Recommending
 
@@ -90,7 +92,7 @@ React and Next.js performance optimization guidelines from Vercel Engineering.
 (185K installs)
 
 To install it:
-npx skills add vercel-labs/agent-skills@react-best-practices
+npx skills add vercel-labs/agent-skills@react-best-practices -a claude-code -g -y
 
 Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 ```
@@ -100,7 +102,7 @@ Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 If the user wants to proceed, you can install the skill for them:
 
 ```bash
-npx skills add <owner/repo@skill> -g -y
+npx skills add <owner/repo@skill> -a claude-code -g -y
 ```
 
 The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
