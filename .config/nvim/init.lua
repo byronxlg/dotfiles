@@ -51,7 +51,6 @@ require("lazy").setup({
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     lazy = false,
-    build = ":TSUpdate",
     config = function()
       local langs = { "lua", "vim", "vimdoc", "markdown", "markdown_inline" }
       require("nvim-treesitter").install(langs)
