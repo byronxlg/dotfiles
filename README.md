@@ -15,7 +15,3 @@ chmod +x ./setup_macos.sh && ./setup_macos.sh
 -   [Nerd Font](https://www.nerdfonts.com/font-downloads)
 -   [Color Scheme](https://github.com/catppuccin/iterm)
 
-## Fixes
-
--   Bat
-    -   Run `bat cache --build` to resolve `[bat warning]: Unknown theme 'Catppuccin Mocha', using default.`

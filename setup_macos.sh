@@ -55,4 +55,5 @@ chmod +x setup/*
 
 setup/macos.sh
 setup/vscode.sh
+setup/bat.sh
 
