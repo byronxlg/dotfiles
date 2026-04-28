@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Tmux session initialization script
-# Place this file in your project root and customize it for your project
+# Lives at ~/.tmux-session.sh and runs against the current working directory.
 
 # Get the project directory name for the session name
 PROJECT_NAME=$(basename "$PWD")
