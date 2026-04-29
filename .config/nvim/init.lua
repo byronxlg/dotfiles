@@ -147,7 +147,21 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       defaults = {
-        file_ignore_patterns = { "%.git/" },
+        file_ignore_patterns = {
+          "%.git/",
+          "node_modules/",
+          "%.venv/",
+          "venv/",
+          "__pycache__/",
+          "%.mypy_cache/",
+          "%.ruff_cache/",
+          "%.pytest_cache/",
+          "dist/",
+          "build/",
+          "target/",
+          "%.next/",
+          "%.DS_Store",
+        },
         mappings = {
           i = {
             ["<C-j>"] = "move_selection_next",
@@ -156,7 +170,10 @@ require("lazy").setup({
         },
       },
       pickers = {
-        find_files = { hidden = true },
+        find_files = {
+          hidden = true,
+          find_command = { "fd", "--type", "f", "--hidden", "--follow", "--no-ignore-vcs" },
+        },
       },
     },
     keys = {
@@ -182,7 +199,23 @@ require("lazy").setup({
       view_options = {
         show_hidden = true,
         is_always_hidden = function(name, _)
-          return name == ".." or name == ".git"
+          local always_hidden = {
+            [".."] = true,
+            [".git"] = true,
+            ["node_modules"] = true,
+            [".venv"] = true,
+            ["venv"] = true,
+            ["__pycache__"] = true,
+            [".mypy_cache"] = true,
+            [".ruff_cache"] = true,
+            [".pytest_cache"] = true,
+            ["dist"] = true,
+            ["build"] = true,
+            ["target"] = true,
+            [".next"] = true,
+            [".DS_Store"] = true,
+          }
+          return always_hidden[name] == true
         end,
       },
     },
