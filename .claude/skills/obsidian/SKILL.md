@@ -98,6 +98,8 @@ The user runs the Folder Notes plugin. Convention: a note named the same as its 
 
 When creating an overview/index for a folder, follow this pattern rather than a sibling `Foo.md` outside the folder, or a generic `Overview.md` inside it. Folder notes should NOT carry the per-item tag used by their entries (e.g. a folder note grouping `supplement`-tagged entries should not be tagged `supplement`), so that base/dataview filters using that tag don't pick up the folder note itself.
 
+**Folder note as schema source.** When a folder holds many similarly-shaped notes (trades, supplements, projects, journal entries), let the folder note do triple duty: document the frontmatter schema and naming convention in prose, embed a Bases view over the entries, and serve as the click-to-open index. The schema lives in one place, the index renders from it, and every entry's shape is implicitly documented by what the folder note demonstrates. Skills/scripts that write into the folder should reference the folder note rather than re-stating the schema in their own docs — it's the canonical source. Example in this vault: `Prediction Markets/Polymarket/Trades/Trades.md`.
+
 ## Note conventions
 
 Notes follow a consistent shape. Match it when creating or editing.
@@ -108,6 +110,7 @@ YAML frontmatter at the top, between `---` fences. Common fields seen in this va
 
 ```yaml
 ---
+created: 2026-05-01
 tags:
   - project
   - agents
@@ -122,11 +125,24 @@ repo: ~/repos/skills
 ```
 
 - `tags`: list, kebab-case or single words. `moc` marks a map-of-content (index note).
-- `status`: `active`, `archive`, `complete` — used on project notes.
+- `status`: `active`, `archive`, `complete` — used on project notes; the same pattern generalizes to any lifecycle field (e.g. `open` / `closed` / `resolved` for trades).
 - `aliases`: alternate names that resolve as wikilink targets.
+- `created`: ISO date (`2026-05-01`) — convention used across the vault. Bases recognizes it as a date type for sorting and filtering.
 - Custom fields like `tech`, `repo`, etc. are fine — Obsidian Properties surfaces them automatically. Use list form for multi-value fields (one item per `-` line), not inline arrays.
 
 When adding frontmatter to a note that lacks it, place it as the very first lines of the file with no blank line before the opening `---`.
+
+**Quote long integers and hex values as strings.** YAML parses unquoted `0xa96e...` as a number (resulting in `0` for non-numeric hex chars) and unquoted huge integers (uint256-sized token IDs) silently lose precision. Always wrap blockchain identifiers, transaction hashes, and large numeric IDs in single quotes:
+
+```yaml
+token_id: '19929255357735608968567113701441639433303309211596766910631472055037903553483'
+condition_id: '0xa96e71186507bf493bd1fb8101418c369c6296a29b49514fdec3f7bfe7197909'
+tx_hash: '0x323922c1...'
+```
+
+Plain numbers within Python's int range, decimals (`0.74`), and short strings don't need quoting.
+
+**Frontmatter is the source of truth.** Don't restate frontmatter fields in a body table — the Properties UI renders them above the body, and Bases queries them in any index. A markdown table that mirrors frontmatter values is duplicate maintenance and will drift the moment one place is updated and the other isn't. Bodies hold prose, thesis, and `## Updates` lists; structured facts live exclusively in frontmatter.
 
 ### Body
 
@@ -194,6 +210,8 @@ Prefer Edit over Write for existing notes — preserves the rest of the file unt
 - Don't reformat unrelated fields.
 - Keep list-form for multi-value fields.
 - Preserve trailing newlines and section spacing.
+
+A markdown formatter runs on the vault and may re-pad tables, normalize column widths, or canonicalize spacing on save. Don't bother manually aligning markdown tables — the formatter will. Edits may come back as system notifications with whitespace-only diffs; that's the formatter, not a real content change.
 
 ### Daily notes
 
