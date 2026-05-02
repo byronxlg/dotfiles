@@ -111,7 +111,13 @@ Top-level folders group notes by domain. Prefer placing new notes under an exist
 
 ### Naming
 
-File and folder names use **Title Case with spaces** (e.g. `About Me.md`, `Me Today Magnesium 875.md`). Not kebab-case, not snake_case. Match this for any new files or folders.
+File and folder names use **Title Case with spaces** (e.g. `About Me.md`, `Me Today Magnesium 875.md`). Match this for any new files or folders.
+
+Exceptions, all intentional:
+
+- **Project notes in `Projects/`** are kebab-case to match the backing repo name (`agent-team.md`, `byronxlg.md`, `polyagent.md`). The "Proactive project lookup" convention `Projects/<repo-name>.md` depends on this — don't title-case them.
+- **Date-keyed notes** use ISO format (`2026-04-27.md`) — daily-log entries, dated trade notes, dated backtests.
+- **Attachment folders** are `_attachments/` (underscore-prefixed lowercase) — see "Attachments" below.
 
 ### Renaming on a case-insensitive filesystem
 
@@ -177,13 +183,13 @@ Plain numbers within Python's int range, decimals (`0.74`), and short strings do
 After the frontmatter, an H1 matching the filename, then prose and sections:
 
 ```markdown
-# Skills
+# Note Title
 
-Collection of Claude Code skills offering two main frameworks.
+One-paragraph statement of what this note covers.
 
-## Agent Team
+## Section
 
-Multi-agent coordination with defined roles ...
+Section content.
 ```
 
 ### Wikilinks
@@ -195,7 +201,7 @@ Internal links use Obsidian wikilink syntax, not standard markdown links:
 - `[[Note Name#Heading]]` — link to a specific heading
 - `[[Note Name#^block-id]]` — link to a block reference
 
-The vault uses **shortest-path** link resolution — `[[Skills]]` resolves to `Projects/Skills.md` because that filename is unique. Don't write the folder unless the filename is ambiguous. When renaming a note, search for and update all wikilinks pointing at the old name (Obsidian's UI does this automatically; you have to do it manually when editing files outside the app).
+The vault uses **shortest-path** link resolution — `[[About Me]]` resolves to `About Me/About Me.md` because that filename is unique. Don't write the folder unless the filename is ambiguous. When renaming a note, search for and update all wikilinks pointing at the old name (Obsidian's UI does this automatically; you have to do it manually when editing files outside the app).
 
 ### Tags
 
@@ -220,10 +226,10 @@ rg --type md -l "^# .*[Aa]gents" ~/repos/obsidian/Byron -g '!.obsidian'
 Use `rg` with `--type md` and the standard exclusions. For wikilink references to a specific note:
 
 ```bash
-rg --type md '\[\[Skills(\||\]|#)' ~/repos/obsidian/Byron -g '!.obsidian'
+rg --type md '\[\[Polymarket(\||\]|#)' ~/repos/obsidian/Byron -g '!.obsidian'
 ```
 
-The trailing alternation matches `[[Skills]]`, `[[Skills|...`, and `[[Skills#...`, so it doesn't false-positive on notes that start with "Skills".
+The trailing alternation matches `[[Polymarket]]`, `[[Polymarket|...`, and `[[Polymarket#...`, so it doesn't false-positive on notes that start with "Polymarket".
 
 ### Create a note
 
@@ -236,19 +242,18 @@ The trailing alternation matches `[[Skills]]`, `[[Skills|...`, and `[[Skills#...
 
 Prefer Edit over Write for existing notes — preserves the rest of the file untouched. When updating frontmatter:
 - Don't reformat unrelated fields.
-- Keep list-form for multi-value fields.
+- Match vault style for tags and aliases (inline `[a, b]`); preserve existing form for other multi-value fields unless deliberately converting.
 - Preserve trailing newlines and section spacing.
 
 A markdown formatter runs on the vault and may re-pad tables, normalize column widths, or canonicalize spacing on save. Don't bother manually aligning markdown tables — the formatter will. Edits may come back as system notifications with whitespace-only diffs; that's the formatter, not a real content change.
 
 ### Daily notes
 
-The Daily Notes core plugin is enabled but not configured, so it uses defaults:
-- Location: vault root (no folder specified)
-- Format: `YYYY-MM-DD.md`
-- Template: none
+The Daily Notes core plugin is enabled but not configured (defaults: vault root, format `YYYY-MM-DD.md`, no template). No top-level daily note exists yet — `Daily Logs/` at the root is intentionally kept free for a future cross-cutting one.
 
-If the user asks to create or open today's daily note, the path is `~/repos/obsidian/Byron/<YYYY-MM-DD>.md`. Get today's date from the conversation's `currentDate` context, not from `date` on the shell, since the user may have stated a different working date.
+The daily-cadence notes that DO exist are **domain-scoped**. Currently only one: `Health/Health Log/<YYYY-MM-DD>.md`. Each entry is tagged `daily-log` and starts as a duplicate of `Health/Health Log/Template.md`. The folder note `Health Log.md` embeds a Bases view filtered on the `daily-log` tag.
+
+When the user asks for "today's daily note", clarify if ambiguous (health log? generic journal? something else?) before creating — there is no single canonical path. Get today's date from the conversation's `currentDate` context, not `date` on the shell, since the user may have stated a different working date.
 
 ### MOCs (maps-of-content)
 
