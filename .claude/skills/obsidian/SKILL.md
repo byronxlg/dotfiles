@@ -1,6 +1,6 @@
 ---
 name: obsidian
-description: Read, search, create, and modify notes in Byron's Obsidian vault by editing the markdown files directly. Use whenever the user mentions Obsidian, "my vault", "my notes", a daily note, a journal entry, a project note, an MOC, or asks to find/save/update anything in their personal knowledge base — even if the word "Obsidian" is not used. Also use when the user asks to set up, wire up, or connect Claude Desktop (or "the desktop app") to the vault — see the "Setting up Claude Desktop" section. Covers vault layout, frontmatter conventions, wikilinks, daily notes, Claude Desktop MCP config, and how to avoid breaking the graph.
+description: Read, search, create, and modify notes in Byron's Obsidian vault by editing the markdown files directly. Use whenever the user mentions Obsidian, "my vault", "my notes", a daily note, a journal entry, a project note, an MOC, or asks to find/save/update anything in their personal knowledge base — even if the word "Obsidian" is not used. Also use when the user asks to set up, wire up, or connect Claude Desktop (or "the desktop app") to the vault — see the "Setting up Claude Desktop" section. Also invoke proactively at the start of substantive work in any repo other than the vault itself: check whether `~/repos/obsidian/Byron/Projects/<cwd-basename>.md` exists and read it for prior decisions and context if so. Covers vault layout, frontmatter conventions, wikilinks, daily notes, Claude Desktop MCP config, the read/write policy for the vault, and how to avoid breaking the graph.
 ---
 
 # Obsidian vault
@@ -24,6 +24,37 @@ When listing or searching the vault, exclude `.obsidian/` and `.git/`. Example:
 fd -tf -e md . ~/repos/obsidian/Byron -E .obsidian -E .git
 rg --type md "query" ~/repos/obsidian/Byron -g '!.obsidian' -g '!.git'
 ```
+
+## Proactive project lookup
+
+When invoked at the start of a session in a non-vault repo, check whether the vault has a project note for the current repo before doing other work. Convention: each project repo has a note at `~/repos/obsidian/Byron/Projects/<repo-name>.md` where `<repo-name>` is the basename of the current working directory.
+
+Steps:
+
+1. Derive `<repo-name>` from the cwd in the conversation environment. Skip the rest of this procedure entirely if the cwd is `~/repos/obsidian/Byron` — that's the vault itself, and the skill's normal usage covers it.
+2. Read `~/repos/obsidian/Byron/Projects/<repo-name>.md` directly. A not-found error is the negative signal — handle it silently.
+3. If the read succeeded, use the contents (prior decisions, conventions, pending items, related links) as context for the user's first substantive request.
+4. If the file doesn't exist, continue without it. Don't surface its absence to the user unless they ask, and don't create one unsolicited.
+
+Strict path match only — don't fuzzy-search across folders. The convention assumes one note per project at the deterministic path; broadening the search is a future call once the strict version proves insufficient.
+
+## Read/write policy
+
+The vault has two distinct usage flows. Apply the policy that matches the current cwd.
+
+### Flow 1: In-vault session (cwd = `~/repos/obsidian/Byron`)
+
+The user is here to curate the vault. Reads anywhere; writes wherever the user directs. No allowlist or confirmation gate — confirmation is friction when the user is explicitly working on the vault. obsidian-git's auto-commit history is the rollback layer if anything goes wrong.
+
+### Flow 2: Out-of-vault session (cwd = some project repo)
+
+The vault is a context store and (by suggestion only) a destination for durable outcomes of project work. Out-of-vault sessions are read-mostly; the user owns when and where to write.
+
+- **Read proactively**: the project note for the current repo (see "Proactive project lookup"), notes it links to, and any note relevant to the user's request.
+- **Suggest-write only**: when a session produces a durable outcome (a decision, a pending TODO, a status change, a new finding), suggest an update to the project note (or to a new linked sub-note inside the project's folder). Format: *"I'd add a `## Pending` section to `<path>` saying X — want me to?"* Write only after the user agrees.
+- **Never write unsolicited** anywhere in the vault during a Flow 2 session — including `Claude/Claude Code/Problems/*`, daily notes, MOCs, and personal-domain folders. If a write feels warranted, suggest it; the user decides.
+
+For both flows: never write to `.obsidian/`. Plugin and workspace state is easy to corrupt and not worth the risk.
 
 ## Setting up Claude Desktop
 
@@ -111,12 +142,9 @@ YAML frontmatter at the top, between `---` fences. Common fields seen in this va
 ```yaml
 ---
 created: 2026-05-01
-tags:
-  - project
-  - agents
+tags: [project, agents]
 status: active
-aliases:
-  - Project Index
+aliases: [Project Index]
 tech:
   - Bash
   - Markdown
@@ -124,11 +152,11 @@ repo: ~/repos/skills
 ---
 ```
 
-- `tags`: list, kebab-case or single words. `moc` marks a map-of-content (index note).
+- `tags`: kebab-case or single words. **Inline form (`tags: [a, b]`) is the vault standard** — block form (one per line) is only for very long lists. `moc` marks a map-of-content (index note).
 - `status`: `active`, `archive`, `complete` — used on project notes; the same pattern generalizes to any lifecycle field (e.g. `open` / `closed` / `resolved` for trades).
-- `aliases`: alternate names that resolve as wikilink targets.
+- `aliases`: inline `[x, y]` for short lists, same as tags.
 - `created`: ISO date (`2026-05-01`) — convention used across the vault. Bases recognizes it as a date type for sorting and filtering.
-- Custom fields like `tech`, `repo`, etc. are fine — Obsidian Properties surfaces them automatically. Use list form for multi-value fields (one item per `-` line), not inline arrays.
+- Custom fields like `tech`, `repo`, etc. are fine — Obsidian Properties surfaces them automatically. Inline form preferred for short value lists; block form fine for longer ones.
 
 When adding frontmatter to a note that lacks it, place it as the very first lines of the file with no blank line before the opening `---`.
 
@@ -224,7 +252,26 @@ If the user asks to create or open today's daily note, the path is `~/repos/obsi
 
 ### MOCs (maps-of-content)
 
-Notes tagged `moc` are index notes — usually a header per category and a markdown table of `[[Note]] | description | status` rows. `Projects/Projects.md` is the canonical example. When adding a note that belongs in an MOC, append a row in the appropriate section rather than creating a new MOC.
+Notes tagged `moc` are index notes. The minimum shape:
+
+````markdown
+---
+created: 2026-05-01
+tags: [moc, <domain>]
+---
+
+# <Folder Name>
+
+One-paragraph statement of what this folder is for.
+
+<then: a base, a hand-maintained table, or a wikilink list — see below>
+````
+
+Pick the children-index pattern by content shape:
+
+- **Embedded base over a shared tag** — preferred when children are leaf notes that share a per-item tag and grow over time (e.g. `Problems/`, `Walks/`, `Trades/`, `Ideas/`). New entries auto-appear; no MOC edit needed.
+- **Hand-maintained markdown table** — when each row needs context that isn't in frontmatter (rich descriptions, category-grouped sections), e.g. `Projects/Projects.md`. When adding a note here, append a row in the appropriate section.
+- **Hand-maintained wikilink list** — when the children are 1–3 sub-MOCs (a navigation index, not a dataset). A 3-line list reads better than a sparse base.
 
 ### Bases (database views)
 
@@ -235,7 +282,26 @@ Two ways to render a base:
 - **Embedded `base` code block** in any markdown file.
 - **Sibling `.base` file** embedded via `![[Foo.base]]`. Use as a fallback if a code block won't render in the user's Obsidian version, or when the same view is reused on multiple pages.
 
-Working code-block example:
+Minimum drop-in shape — title + created — for any folder of leaf notes that share a tag:
+
+````markdown
+```base
+filters:
+  and:
+    - file.hasTag("<entry-tag>")
+properties:
+  created:
+    displayName: Created
+views:
+  - type: table
+    name: Notes
+    order:
+      - file.name
+      - created
+```
+````
+
+Add an extra column when one is consistently present and useful (`status`, `currently_doing`, etc.). The fuller example below shows multiple views with different per-view filters:
 
 ````markdown
 ```base
@@ -283,9 +349,13 @@ Syntax gotchas (all learned the hard way):
 
 ### Attachments
 
-Configured via `app.json` → `attachmentFolderPath: "./attachments"` (i.e. "In subfolder under current folder", subfolder name `attachments`). Pasting/dropping an image into a note creates `<note's folder>/attachments/<file>`.
+Configured via `app.json` → `attachmentFolderPath: "./_attachments"` (i.e. "In subfolder under current folder", subfolder name `_attachments`). Pasting/dropping an image into a note creates `<note's folder>/_attachments/<file>`.
 
-When adding an attachment manually (e.g. via `curl`), put it in the `attachments/` subfolder next to the note that references it. Wikilink with shortest-path: `![[file.jpg]]` resolves correctly as long as the filename is unique in the vault.
+The underscore prefix sorts `_attachments/` to the top of folder listings and visually separates it from note folders. Use it for *all* digital files referenced from notes — images, PDFs, GPX/KML, audio, etc. One name across the vault, no per-area variants.
+
+When adding an attachment manually (e.g. via `curl`), put it in `_attachments/` next to the note that references it. Wikilink with shortest-path: `![[file.jpg]]` resolves correctly as long as the filename is unique in the vault — the path doesn't appear in the link.
+
+**`_attachments/` is for digital files; `Assets/` is not.** `About Me/Assets/` holds *notes about physical things the user owns* (e.g. a vehicle note tagged `asset`). It is not an attachment folder. Don't drop images, PDFs, or other binaries there — they go in `_attachments/`.
 
 ## Plugins worth knowing about
 
