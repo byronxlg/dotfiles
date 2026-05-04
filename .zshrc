@@ -51,7 +51,7 @@ PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 PATH="$HOME/.local/bin:$PATH"
 
 # Source zshrc
-alias restart-zsh='source ~/.zshrc'
+alias restart-zsh='exec zsh'
 
 # Run local zshrc if it exists
 [ -f ~/.local_zshrc.sh ] && source ~/.local_zshrc.sh
