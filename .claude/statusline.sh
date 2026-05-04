@@ -70,6 +70,15 @@ elif [ -f "$settings_path" ]; then
     [ -n "$effort_val" ] && effort_level="$effort_val"
 fi
 
+# Check if Bedrock is enabled
+use_bedrock="0"
+if [ -n "$CLAUDE_CODE_USE_BEDROCK" ]; then
+    use_bedrock="$CLAUDE_CODE_USE_BEDROCK"
+elif [ -f "$settings_path" ]; then
+    bedrock_val=$(jq -r '.env.CLAUDE_CODE_USE_BEDROCK // "0"' "$settings_path" 2>/dev/null)
+    [ -n "$bedrock_val" ] && use_bedrock="$bedrock_val"
+fi
+
 # ===== Build single-line output =====
 out=""
 
@@ -79,7 +88,11 @@ case "$effort_level" in
     medium) effort_str="${peach}med${reset}" ;;
     *)      effort_str="${green}high${reset}" ;;
 esac
-out+=" ${dim}|${reset} ${blue}${model_name}${reset} ${dim}(${reset}${effort_str}${dim})${reset}"
+out+=" ${dim}|${reset} "
+if [ "$use_bedrock" = "1" ]; then
+    out+="${yellow}bedrock${reset} "
+fi
+out+="${blue}${model_name}${reset} ${dim}(${reset}${effort_str}${dim})${reset}"
 
 # Current working directory
 cwd=$(echo "$input" | jq -r '.cwd // empty')
@@ -101,6 +114,9 @@ fi
 
 out+=" ${dim}|${reset} "
 out+="${peach}${used_tokens}/${total_tokens}${reset}"
+
+# ===== Usage limits (skipped when using Bedrock) =====
+if [ "$use_bedrock" != "1" ]; then
 
 # ===== Cross-platform OAuth token resolution =====
 # Tries credential sources in order: env var -> macOS Keychain -> Linux creds file -> GNOME Keyring
@@ -265,6 +281,8 @@ if [ -n "$usage_data" ] && echo "$usage_data" | jq -e . >/dev/null 2>&1; then
         out+=" ${dim}in $(format_duration "$seconds_until")${reset}"
     fi
 fi
+
+fi  # end: not bedrock
 
 # Output single line
 printf "%b" "$out"
