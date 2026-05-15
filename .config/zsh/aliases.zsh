@@ -20,6 +20,7 @@ alias jqc='jq --color-output'
 
 # TMUX project launcher
 alias tmux-project='bash ~/.tmux-session.sh'
+alias tmux-claude='bash ~/.tmux-claude.sh'
 
 # Claude code commands
 alias claudd='claude --dangerously-skip-permissions'
