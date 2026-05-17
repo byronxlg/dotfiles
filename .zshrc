@@ -56,6 +56,26 @@ alias restart-zsh='exec zsh'
 # Run local zshrc if it exists
 [ -f ~/.local_zshrc.sh ] && source ~/.local_zshrc.sh
 
+# Toggle Claude between Anthropic API and AWS Bedrock by editing .zshenv.local
+claude-toggle-aws() {
+  local env_file="$HOME/.zshenv.local"
+  local current
+  current=$(rg -o '(?<=CLAUDE_CODE_USE_BEDROCK=)\S+' "$env_file" 2>/dev/null || echo "0")
+
+  if [[ "$current" == "1" ]]; then
+    sed -i '' \
+      -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=0/' \
+      "$env_file"
+    echo "Claude: Anthropic API"
+  else
+    sed -i '' \
+      -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=1/' \
+      "$env_file"
+    echo "Claude: AWS Bedrock"
+  fi
+  source "$env_file"
+}
+
 # bun completions
 [ -s "/Users/byron.smith/.bun/_bun" ] && source "/Users/byron.smith/.bun/_bun"
 
