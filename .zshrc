@@ -66,14 +66,18 @@ claude-toggle-aws() {
     sed -i '' \
       -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=0/' \
       "$env_file"
+    unset CLAUDE_CODE_USE_BEDROCK AWS_REGION AWS_PROFILE \
+          ANTHROPIC_MODEL ANTHROPIC_DEFAULT_SONNET_MODEL \
+          ANTHROPIC_DEFAULT_HAIKU_MODEL ANTHROPIC_DEFAULT_OPUS_MODEL \
+          CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS AWS_BEARER_TOKEN_BEDROCK
     echo "Claude: Anthropic API"
   else
     sed -i '' \
       -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=1/' \
       "$env_file"
+    source "$env_file"
     echo "Claude: AWS Bedrock"
   fi
-  source "$env_file"
 }
 
 # bun completions
