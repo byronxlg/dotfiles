@@ -53,5 +53,8 @@
   "voiceEnabled": true,
   "skipAutoPermissionPrompt": true,
   "awsAuthRefresh": "aws-azure-login",
-  "verbose": true
+  "verbose": true,
+  "worktree": {
+    "bgIsolation": "none"
+  }
 }
