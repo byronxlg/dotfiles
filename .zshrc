@@ -67,6 +67,14 @@ claude-use-aws() {
   export ANTHROPIC_DEFAULT_HAIKU_MODEL=global.anthropic.claude-haiku-4-5-20251001-v1:0
   export ANTHROPIC_DEFAULT_OPUS_MODEL=global.anthropic.claude-opus-4-7
   export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+  sed -i '' '/^export CLAUDE_CODE_USE_BEDROCK=/d
+/^export AWS_REGION=/d
+/^export AWS_PROFILE=/d
+/^export ANTHROPIC_MODEL=/d
+/^export ANTHROPIC_DEFAULT_SONNET_MODEL=/d
+/^export ANTHROPIC_DEFAULT_HAIKU_MODEL=/d
+/^export ANTHROPIC_DEFAULT_OPUS_MODEL=/d
+/^export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=/d' "$env_file"
   cat >> "$env_file" <<'EOF'
 export CLAUDE_CODE_USE_BEDROCK=1
 export AWS_REGION=us-east-1
