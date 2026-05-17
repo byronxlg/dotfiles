@@ -56,26 +56,23 @@ alias restart-zsh='exec zsh'
 # Run local zshrc if it exists
 [ -f ~/.local_zshrc.sh ] && source ~/.local_zshrc.sh
 
-# Toggle Claude between Anthropic API and AWS Bedrock by editing .zshenv.local
+# Toggle Claude between Anthropic API and AWS Bedrock
 claude-toggle-aws() {
-  local env_file="$HOME/.zshenv.local"
-  local current
-  current=$(rg 'CLAUDE_CODE_USE_BEDROCK=' "$env_file" 2>/dev/null | awk -F= '{print $2}' || echo "0")
-
-  if [[ "$current" == "1" ]]; then
-    sed -i '' \
-      -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=0/' \
-      "$env_file"
+  if [[ "${CLAUDE_CODE_USE_BEDROCK}" == "1" ]]; then
     unset CLAUDE_CODE_USE_BEDROCK AWS_REGION AWS_PROFILE \
           ANTHROPIC_MODEL ANTHROPIC_DEFAULT_SONNET_MODEL \
           ANTHROPIC_DEFAULT_HAIKU_MODEL ANTHROPIC_DEFAULT_OPUS_MODEL \
-          CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS AWS_BEARER_TOKEN_BEDROCK
+          CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS
     echo "Claude: Anthropic API"
   else
-    sed -i '' \
-      -e 's/^export CLAUDE_CODE_USE_BEDROCK=.*/export CLAUDE_CODE_USE_BEDROCK=1/' \
-      "$env_file"
-    source "$env_file"
+    export CLAUDE_CODE_USE_BEDROCK=1
+    export AWS_REGION=us-east-1
+    export AWS_PROFILE=default
+    export ANTHROPIC_MODEL=global.anthropic.claude-sonnet-4-6
+    export ANTHROPIC_DEFAULT_SONNET_MODEL=global.anthropic.claude-sonnet-4-6
+    export ANTHROPIC_DEFAULT_HAIKU_MODEL=global.anthropic.claude-haiku-4-5-20251001-v1:0
+    export ANTHROPIC_DEFAULT_OPUS_MODEL=global.anthropic.claude-opus-4-7
+    export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
     echo "Claude: AWS Bedrock"
   fi
 }
