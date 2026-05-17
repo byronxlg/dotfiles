@@ -60,7 +60,7 @@ alias restart-zsh='exec zsh'
 claude-toggle-aws() {
   local env_file="$HOME/.zshenv.local"
   local current
-  current=$(rg -o '(?<=CLAUDE_CODE_USE_BEDROCK=)\S+' "$env_file" 2>/dev/null || echo "0")
+  current=$(rg 'CLAUDE_CODE_USE_BEDROCK=' "$env_file" 2>/dev/null | awk -F= '{print $2}' || echo "0")
 
   if [[ "$current" == "1" ]]; then
     sed -i '' \
