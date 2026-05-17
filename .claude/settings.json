@@ -52,5 +52,6 @@
   "skipDangerousModePermissionPrompt": true,
   "voiceEnabled": true,
   "skipAutoPermissionPrompt": true,
+  "awsAuthRefresh": "aws-azure-login",
   "verbose": true
 }
