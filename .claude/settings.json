@@ -22,7 +22,7 @@
       "Bash(rm -rf /)"
     ]
   },
-  "model": "opus[1m]",
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
