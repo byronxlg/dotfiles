@@ -44,6 +44,43 @@ usage_color() {
     fi
 }
 
+# Format seconds duration as "1h23m", "45m", or "30s"
+format_duration() {
+    local total=$1
+    [ "$total" -lt 0 ] && total=0
+    if [ "$total" -lt 60 ]; then
+        printf "%ds" "$total"
+    elif [ "$total" -lt 3600 ]; then
+        printf "%dm" $(( total / 60 ))
+    else
+        local h=$(( total / 3600 ))
+        local m=$(( (total % 3600) / 60 ))
+        if [ "$m" -eq 0 ]; then
+            printf "%dh" "$h"
+        else
+            printf "%dh%dm" "$h" "$m"
+        fi
+    fi
+}
+
+# Build a 10-cell progress bar; filled cells use $color, empty cells are dim
+make_bar() {
+    local pct=$1
+    local color=$2
+    local cells=10
+    local filled=$(( pct * cells / 100 ))
+    [ "$filled" -gt "$cells" ] && filled=$cells
+    [ "$filled" -lt 0 ] && filled=0
+    local empty=$(( cells - filled ))
+    local bar="${color}"
+    local i
+    for ((i=0; i<filled; i++)); do bar+="▓"; done
+    bar+="${reset}${dim}"
+    for ((i=0; i<empty; i++)); do bar+="░"; done
+    bar+="${reset}"
+    printf "%s" "$bar"
+}
+
 # ===== Extract data from JSON =====
 model_name=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 
@@ -115,174 +152,22 @@ fi
 out+=" ${dim}|${reset} "
 out+="${peach}${used_tokens}/${total_tokens}${reset}"
 
-# ===== Usage limits (skipped when using Bedrock) =====
+# ===== Usage limits (from JSON input, skipped when using Bedrock) =====
 if [ "$use_bedrock" != "1" ]; then
+    five_hour_pct=$(echo "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty' | awk '{printf "%.0f", $1}')
+    five_hour_reset=$(echo "$input" | jq -r '.rate_limits.five_hour.resets_at // empty')
 
-# ===== Cross-platform OAuth token resolution =====
-# Tries credential sources in order: env var -> macOS Keychain -> Linux creds file -> GNOME Keyring
-get_oauth_token() {
-    local token=""
+    if [ -n "$five_hour_pct" ]; then
+        five_hour_color=$(usage_color "$five_hour_pct")
+        five_hour_bar=$(make_bar "$five_hour_pct" "$five_hour_color")
+        out+=" ${dim}|${reset} ${text}5h${reset} ${five_hour_bar} ${five_hour_color}${five_hour_pct}%${reset}"
 
-    if [ -n "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
-        echo "$CLAUDE_CODE_OAUTH_TOKEN"
-        return 0
-    fi
-
-    if command -v security >/dev/null 2>&1; then
-        local blob
-        blob=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null)
-        if [ -n "$blob" ]; then
-            token=$(echo "$blob" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
-            if [ -n "$token" ] && [ "$token" != "null" ]; then
-                echo "$token"
-                return 0
-            fi
+        if [ -n "$five_hour_reset" ]; then
+            seconds_until=$(( five_hour_reset - $(date +%s) ))
+            out+=" ${dim}in $(format_duration "$seconds_until")${reset}"
         fi
-    fi
-
-    local creds_file="${HOME}/.claude/.credentials.json"
-    if [ -f "$creds_file" ]; then
-        token=$(jq -r '.claudeAiOauth.accessToken // empty' "$creds_file" 2>/dev/null)
-        if [ -n "$token" ] && [ "$token" != "null" ]; then
-            echo "$token"
-            return 0
-        fi
-    fi
-
-    if command -v secret-tool >/dev/null 2>&1; then
-        local blob
-        blob=$(timeout 2 secret-tool lookup service "Claude Code-credentials" 2>/dev/null)
-        if [ -n "$blob" ]; then
-            token=$(echo "$blob" | jq -r '.claudeAiOauth.accessToken // empty' 2>/dev/null)
-            if [ -n "$token" ] && [ "$token" != "null" ]; then
-                echo "$token"
-                return 0
-            fi
-        fi
-    fi
-
-    echo ""
-}
-
-# ===== Usage limits (cached) =====
-cache_file="/tmp/claude/statusline-usage-cache.json"
-cache_max_age=60  # seconds between API calls
-mkdir -p /tmp/claude
-
-needs_refresh=true
-usage_data=""
-
-if [ -f "$cache_file" ]; then
-    cache_mtime=$(stat -c %Y "$cache_file" 2>/dev/null || stat -f %m "$cache_file" 2>/dev/null)
-    now=$(date +%s)
-    cache_age=$(( now - cache_mtime ))
-    if [ "$cache_age" -lt "$cache_max_age" ]; then
-        needs_refresh=false
-        usage_data=$(cat "$cache_file" 2>/dev/null)
     fi
 fi
-
-if $needs_refresh; then
-    token=$(get_oauth_token)
-    if [ -n "$token" ] && [ "$token" != "null" ]; then
-        response=$(curl -s --max-time 10 \
-            -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $token" \
-            -H "anthropic-beta: oauth-2025-04-20" \
-            -H "User-Agent: claude-code/2.1.126" \
-            "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
-        if [ -n "$response" ] && echo "$response" | jq . >/dev/null 2>&1; then
-            if ! echo "$response" | jq -e '.error' >/dev/null 2>&1; then
-                usage_data="$response"
-                echo "$response" > "$cache_file"
-            fi
-        fi
-    fi
-    if [ -z "$usage_data" ] && [ -f "$cache_file" ]; then
-        usage_data=$(cat "$cache_file" 2>/dev/null)
-    fi
-fi
-
-# Cross-platform ISO 8601 to epoch seconds
-iso_to_epoch() {
-    local iso_str="$1"
-    local epoch
-    epoch=$(date -d "${iso_str}" +%s 2>/dev/null)
-    if [ -n "$epoch" ]; then
-        echo "$epoch"
-        return 0
-    fi
-
-    local stripped="${iso_str%%.*}"
-    stripped="${stripped%%Z}"
-    stripped="${stripped%%+*}"
-    stripped="${stripped%%-[0-9][0-9]:[0-9][0-9]}"
-
-    if [[ "$iso_str" == *"Z"* ]] || [[ "$iso_str" == *"+00:00"* ]] || [[ "$iso_str" == *"-00:00"* ]]; then
-        epoch=$(env TZ=UTC date -j -f "%Y-%m-%dT%H:%M:%S" "$stripped" +%s 2>/dev/null)
-    else
-        epoch=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$stripped" +%s 2>/dev/null)
-    fi
-
-    [ -n "$epoch" ] && echo "$epoch"
-}
-
-# Format seconds duration as "1h23m", "45m", or "30s"
-format_duration() {
-    local total=$1
-    [ "$total" -lt 0 ] && total=0
-    if [ "$total" -lt 60 ]; then
-        printf "%ds" "$total"
-    elif [ "$total" -lt 3600 ]; then
-        printf "%dm" $(( total / 60 ))
-    else
-        local h=$(( total / 3600 ))
-        local m=$(( (total % 3600) / 60 ))
-        if [ "$m" -eq 0 ]; then
-            printf "%dh" "$h"
-        else
-            printf "%dh%dm" "$h" "$m"
-        fi
-    fi
-}
-
-# Build a 10-cell progress bar; filled cells use $color, empty cells are dim
-make_bar() {
-    local pct=$1
-    local color=$2
-    local cells=10
-    local filled=$(( pct * cells / 100 ))
-    [ "$filled" -gt "$cells" ] && filled=$cells
-    [ "$filled" -lt 0 ] && filled=0
-    local empty=$(( cells - filled ))
-    local bar="${color}"
-    local i
-    for ((i=0; i<filled; i++)); do bar+="▓"; done
-    bar+="${reset}${dim}"
-    for ((i=0; i<empty; i++)); do bar+="░"; done
-    bar+="${reset}"
-    printf "%s" "$bar"
-}
-
-sep=" ${dim}|${reset} "
-
-if [ -n "$usage_data" ] && echo "$usage_data" | jq -e . >/dev/null 2>&1; then
-    five_hour_pct=$(echo "$usage_data" | jq -r '.five_hour.utilization // 0' | awk '{printf "%.0f", $1}')
-    five_hour_reset_iso=$(echo "$usage_data" | jq -r '.five_hour.resets_at // empty')
-    five_hour_color=$(usage_color "$five_hour_pct")
-    five_hour_bar=$(make_bar "$five_hour_pct" "$five_hour_color")
-
-    out+="${sep}${text}5h${reset} ${five_hour_bar} ${five_hour_color}${five_hour_pct}%${reset}"
-
-    reset_epoch=$(iso_to_epoch "$five_hour_reset_iso")
-    if [ -n "$reset_epoch" ]; then
-        seconds_until=$(( reset_epoch - $(date +%s) ))
-        out+=" ${dim}in $(format_duration "$seconds_until")${reset}"
-    fi
-fi
-
-fi  # end: not bedrock
 
 # Output single line
 printf "%b" "$out"
