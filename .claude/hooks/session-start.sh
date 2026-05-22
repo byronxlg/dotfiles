@@ -44,6 +44,22 @@ if command -v gh >/dev/null 2>&1; then
   fi
 fi
 
+# Capabilities from .zshenv.local - list which vars are set (names only, no values)
+if [ -f ~/.zshenv.local ]; then
+  CAPS=()
+  while IFS= read -r line; do
+    if [[ "$line" =~ ^export[[:space:]]+([A-Z][A-Z0-9_]*)= ]]; then
+      varname="${BASH_REMATCH[1]}"
+      if [ -n "${!varname}" ]; then
+        CAPS+=("$varname")
+      fi
+    fi
+  done < ~/.zshenv.local
+  if [ "${#CAPS[@]}" -gt 0 ]; then
+    CONTEXT="$CONTEXT | Services: $(IFS=', '; echo "${CAPS[*]}")"
+  fi
+fi
+
 if [ -n "$CONTEXT" ]; then
   echo "$CONTEXT"
 fi
