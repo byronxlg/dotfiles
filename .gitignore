@@ -1,3 +1,4 @@
 .local_zshrc.sh
 .DS_Store
 .claude/worktrees/
+.config/nvim/lazy-lock.json
