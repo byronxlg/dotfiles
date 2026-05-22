@@ -44,11 +44,11 @@ if command -v gh >/dev/null 2>&1; then
   fi
 fi
 
-# Capabilities from .zshenv.local - list which vars are set (names only, no values)
+# CC_-prefixed vars in .zshenv.local are credentials set specifically for Claude Code
 if [ -f ~/.zshenv.local ]; then
   CAPS=()
   while IFS= read -r line; do
-    if [[ "$line" =~ ^export[[:space:]]+([A-Z][A-Z0-9_]*)= ]]; then
+    if [[ "$line" =~ ^export[[:space:]]+(CC_[A-Z][A-Z0-9_]*)= ]]; then
       varname="${BASH_REMATCH[1]}"
       if [ -n "${!varname}" ]; then
         CAPS+=("$varname")
