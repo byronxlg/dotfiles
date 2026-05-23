@@ -50,6 +50,14 @@ done
 # Casks
 brew install --cask ghostty
 
+# Doppler (secret management)
+brew install dopplerhq/cli/doppler
+
+# Doppler login - required for ~/.zshenv.local to load secrets
+# On headless machines, set DOPPLER_TOKEN instead of running this
+echo "Logging into Doppler (skip with Ctrl-C on headless machines)..."
+doppler login
+
 # Setup scripts
 chmod +x setup/*
 
