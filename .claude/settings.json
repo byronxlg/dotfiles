@@ -24,6 +24,17 @@
   },
   "model": "sonnet",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "branch=$(git branch --show-current 2>/dev/null); if [ \"$branch\" = 'main' ] || [ \"$branch\" = 'master' ]; then echo 'ERROR: Cannot edit files on main branch. Create a feature branch first: git checkout -b feature/<name>' && exit 1; fi"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": "",
