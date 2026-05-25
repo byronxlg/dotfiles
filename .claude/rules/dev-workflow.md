@@ -14,9 +14,9 @@ See `worktrees.md` for the full policy. Summary: all non-main work happens in a 
 ## Before opening a PR
 
 - **Run tests locally first**: don't open a PR and wait for CI to find failures you could have caught yourself. Run the same commands CI runs.
-- **Lint and format**: `uv run ruff check . && uv run ruff format --check .`
-- **Tests**: `uv run pytest`
-- **Terraform**: `terraform plan` if infra changed - read the plan output carefully before opening the PR.
+- **Lint and format**: run the project's lint and format checks before pushing.
+- **Tests**: run the project's test suite before pushing.
+- **Infra changes**: run a plan if infra changed - read the output carefully before opening the PR.
 - **Exercise the change manually** if it touches behavior: run the affected flow, check the output, confirm it does what you expect. CI checks correctness; you check intent.
 - **Test locally before pushing large changes**: any change that touches core logic, shared utilities, data pipelines, or multiple interconnected components must be tested locally end-to-end before opening a PR. "Large" means: cross-cutting refactors, schema or interface changes, anything that could silently break a downstream consumer. Don't rely on CI alone to catch regressions in these cases.
 
@@ -28,7 +28,7 @@ See `worktrees.md` for the full policy. Summary: all non-main work happens in a 
 
 ## Post-merge
 
-- **Watch the deploy run**: after merging, check that any triggered CI/CD workflows complete successfully. For this repo, merges to main that touch `infra/**` trigger `terraform-apply.yml` - open the Actions tab or run `gh run list --branch main --limit 3` and confirm the run passed.
-- **Smoketest if applicable**: if the deployment exposes observable behavior (an API endpoint, a running service, a scheduled job), verify it manually after deploy. For infrastructure-only changes (S3, DynamoDB, IAM), confirm the resource exists and is configured as expected: `aws s3 ls s3://pdw-data` or equivalent.
+- **Watch the deploy run**: after merging, check that any triggered CI/CD workflows complete successfully. Confirm the run passed before moving on.
+- **Smoketest if applicable**: if the deployment exposes observable behavior (an API endpoint, a running service, a scheduled job), verify it manually after deploy. For infrastructure-only changes, confirm the resource exists and is configured as expected.
 - **If deploy fails**: don't merge a fix on top - investigate the failure first. A broken deploy may leave state partially applied; understand what happened before adding more changes.
 - **Clean up the worktree** once the branch is merged and the deploy is confirmed: `git worktree remove <path>`.
