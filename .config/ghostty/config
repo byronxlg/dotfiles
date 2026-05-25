@@ -1,6 +1,6 @@
 theme = Catppuccin Mocha
 
-background-opacity = 0.9
+background-opacity = 0.95
 
 cursor-style = block
 cursor-style-blink = false
