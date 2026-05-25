@@ -1,146 +1,96 @@
 ---
 name: find-skills
 description: Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.
-allowed-tools: Bash(npx skills *)
+allowed-tools: Bash(gh search *), Bash(gh api *), Bash(gh repo *), Bash(curl *), Bash(mkdir *), Bash(ls *), WebSearch
 model: sonnet
 ---
 
 # Find Skills
 
-This skill helps you discover and install skills from the open agent skills ecosystem.
+This skill searches for ready-made SKILL.md files and installs them locally.
 
-## When to Use This Skill
+Skills are SKILL.md files placed in `~/.claude/skills/<name>/`. Search uses two paths in parallel: GitHub code search and web search.
 
-Use this skill when the user:
+## How to find skills
 
-- Asks "how do I do X" where X might be a common task with an existing skill
-- Says "find a skill for X" or "is there a skill for X"
-- Asks "can you do X" where X is a specialized capability
-- Expresses interest in extending agent capabilities
-- Wants to search for tools, templates, or workflows
-- Mentions they wish they had help with a specific domain (design, testing, deployment, etc.)
+### Step 1: Search both paths in parallel
 
-## What is the Skills CLI?
-
-The Skills CLI (`npx skills`) is the package manager for the open agent skills ecosystem. Skills are modular packages that extend agent capabilities with specialized knowledge, workflows, and tools.
-
-**Key commands:**
-
-- `npx skills search [query] --json` - Search for skills by keyword (non-interactive)
-- `npx skills add <package> -a claude-code` - Install a skill for Claude Code
-- `npx skills check` - Check for skill updates
-- `npx skills update` - Update all installed skills
-
-**Browse skills at:** https://skills.sh/
-
-## How to Help Users Find Skills
-
-### Step 1: Understand What They Need
-
-When a user asks for help with something, identify:
-
-1. The domain (e.g., React, testing, design, deployment)
-2. The specific task (e.g., writing tests, creating animations, reviewing PRs)
-3. Whether this is a common enough task that a skill likely exists
-
-### Step 2: Check the Leaderboard First
-
-Before running a CLI search, check the [skills.sh leaderboard](https://skills.sh/) to see if a well-known skill already exists for the domain. The leaderboard ranks skills by total installs, surfacing the most popular and battle-tested options.
-
-For example, top skills for web development include:
-- `vercel-labs/agent-skills` - React, Next.js, web design (100K+ installs each)
-- `anthropics/skills` - Frontend design, document processing (100K+ installs)
-
-### Step 3: Search for Skills
-
-If the leaderboard doesn't cover the user's need, run the search command:
-
+**GitHub code search:**
 ```bash
-npx skills search [query] --json
+gh search code --filename SKILL.md "<query>" --json repository,path,url --limit 20
 ```
 
-Always use `--json` to avoid interactive prompts that will hang in a non-interactive terminal.
-
-For example:
-
-- User asks "how do I make my React app faster?" -> `npx skills search react performance --json`
-- User asks "can you help me with PR reviews?" -> `npx skills search pr review --json`
-- User asks "I need to create a changelog" -> `npx skills search changelog --json`
-
-### Step 4: Verify Quality Before Recommending
-
-**Do not recommend a skill based solely on search results.** Always verify:
-
-1. **Install count** - Prefer skills with 1K+ installs. Be cautious with anything under 100.
-2. **Source reputation** - Official sources (`vercel-labs`, `anthropics`, `microsoft`) are more trustworthy than unknown authors.
-3. **GitHub stars** - Check the source repository. A skill from a repo with <100 stars should be treated with skepticism.
-
-### Step 5: Present Options to the User
-
-When you find relevant skills, present them to the user with:
-
-1. The skill name and what it does
-2. The install count and source
-3. The install command they can run
-4. A link to learn more at skills.sh
-
-Example response:
-
+**Web search:**
 ```
-I found a skill that might help! The "react-best-practices" skill provides
-React and Next.js performance optimization guidelines from Vercel Engineering.
-(185K installs)
-
-To install it:
-npx skills add vercel-labs/agent-skills@react-best-practices -a claude-code -g -y
-
-Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
+site:github.com SKILL.md "<query>" claude code skill
 ```
 
-### Step 6: Offer to Install
+Combine and deduplicate results across both paths.
 
-If the user wants to proceed, you can install the skill for them:
+### Step 2: Filter out aggregators and mirrors
 
+Before fetching content, discard obvious junk:
+- Repos whose name or description suggests they are aggregators, mirrors, or scrapers (e.g. `skills_feed`, `awesome-claude-skills`, `claude-skill-registry`, `skills-md`)
+- Repos that appear multiple times with identical descriptions but different owners - keep only the one with the most stars
+
+Fetch star counts for surviving candidates:
 ```bash
-npx skills add <owner/repo@skill> -a claude-code -g -y
+gh repo view <owner/repo> --json stargazerCount,description,isFork
 ```
 
-The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
+Prefer repos that are not forks and have meaningful star counts. Deprioritize (but don't discard) low-star repos from unknown authors.
 
-## Common Skill Categories
+### Step 3: Fetch SKILL.md content
 
-When searching, consider these common categories:
+For each candidate, compute the raw URL:
+```
+https://github.com/<owner>/<repo>/blob/<sha>/<path>
+->
+https://raw.githubusercontent.com/<owner>/<repo>/main/<path>
+```
 
-| Category        | Example Queries                          |
-| --------------- | ---------------------------------------- |
-| Web Development | react, nextjs, typescript, css, tailwind |
-| Testing         | testing, jest, playwright, e2e           |
-| DevOps          | deploy, docker, kubernetes, ci-cd        |
-| Documentation   | docs, readme, changelog, api-docs        |
-| Code Quality    | review, lint, refactor, best-practices   |
-| Design          | ui, ux, design-system, accessibility     |
-| Productivity    | workflow, automation, git                |
+Use `curl -sf <raw-url>` to fetch and extract the `description:` field from the YAML frontmatter.
 
-## Tips for Effective Searches
+### Step 4: Present options
 
-1. **Use specific keywords**: "react testing" is better than just "testing"
-2. **Try alternative terms**: If "deploy" doesn't work, try "deployment" or "ci-cd"
-3. **Check popular sources**: Many skills come from `vercel-labs/agent-skills` or `ComposioHQ/awesome-claude-skills`
-
-## When No Skills Are Found
-
-If no relevant skills exist:
-
-1. Acknowledge that no existing skill was found
-2. Offer to help with the task directly using your general capabilities
-3. Suggest the user could create their own skill with `npx skills init`
+Show the user a ranked list (higher stars first within each quality tier):
+- Skill name (last directory component before SKILL.md)
+- Description (from frontmatter)
+- Source repo and star count
+- GitHub URL
 
 Example:
-
 ```
-I searched for skills related to "xyz" but didn't find any matches.
-I can still help you with this task directly! Would you like me to proceed?
-
-If this is something you do often, you could create your own skill:
-npx skills init my-xyz-skill
+gog (steipete/clawdis, 2.1k stars)
+Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.
+https://github.com/steipete/clawdis/tree/main/skills/gog
 ```
+
+### Step 5: Install
+
+If the user wants to install a skill:
+
+1. Determine the skill name from the path (e.g. `skills/gog/SKILL.md` -> `gog`)
+2. If there's a naming conflict with an already-installed skill, ask the user to confirm or pick a different name
+3. Install:
+
+```bash
+mkdir -p ~/.claude/skills/<name>
+curl -sf "<raw-url>" -o ~/.claude/skills/<name>/SKILL.md
+```
+
+4. Confirm the file was written and show the installed skill name.
+
+## Listing installed skills
+
+To show what's already installed:
+
+```bash
+ls ~/.claude/skills/
+```
+
+Then read each `SKILL.md` to show the name and description.
+
+## When nothing is found
+
+Say so clearly and offer to create a new skill with the `skill-creator` skill.
