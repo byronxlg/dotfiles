@@ -18,6 +18,7 @@ See `worktrees.md` for the full policy. Summary: all non-main work happens in a 
 - **Tests**: `uv run pytest`
 - **Terraform**: `terraform plan` if infra changed - read the plan output carefully before opening the PR.
 - **Exercise the change manually** if it touches behavior: run the affected flow, check the output, confirm it does what you expect. CI checks correctness; you check intent.
+- **Test locally before pushing large changes**: any change that touches core logic, shared utilities, data pipelines, or multiple interconnected components must be tested locally end-to-end before opening a PR. "Large" means: cross-cutting refactors, schema or interface changes, anything that could silently break a downstream consumer. Don't rely on CI alone to catch regressions in these cases.
 
 ## PR review
 
