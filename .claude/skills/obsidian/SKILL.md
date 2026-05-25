@@ -352,6 +352,34 @@ Syntax gotchas (all learned the hard way):
 - **Booleans** in frontmatter use unquoted `true`/`false`; filter as `currently_doing == true`.
 - A `.base` file's name and path show in the file explorer like any note. Opening it directly in Obsidian renders the Bases UI and is the easiest way to debug schema errors — error messages there are clearer than anything in markdown preview.
 
+### Format JSON blocks in a note
+
+When a note contains ` ```json ` code blocks, format them with 2-space indentation using `json.loads` + `json.dumps`. This normalises whitespace without changing any values. If a block fails to parse, leave it untouched.
+
+```python
+import re, json
+from pathlib import Path
+
+def reformat_json_blocks(text):
+    def replacer(m):
+        open_fence, block, close_fence = m.group(1), m.group(2), m.group(3)
+        try:
+            parsed = json.loads(block.strip())
+            pretty = json.dumps(parsed, indent=2)
+            return f"{open_fence}{pretty}\n{close_fence}"
+        except json.JSONDecodeError:
+            return m.group(0)
+    return re.sub(r'(```json\n)(.*?)(```)', replacer, text, flags=re.DOTALL)
+
+path = Path("/path/to/note.md")
+text = path.read_text()
+new_text = reformat_json_blocks(text)
+if new_text != text:
+    path.write_text(new_text)
+```
+
+To reformat all `.md` files under a folder, glob with `Path(...).glob("*.md")` and apply the same function to each.
+
 ### Attachments
 
 Configured via `app.json` → `attachmentFolderPath: "./_attachments"` (i.e. "In subfolder under current folder", subfolder name `_attachments`). Pasting/dropping an image into a note creates `<note's folder>/_attachments/<file>`.

@@ -2,4 +2,4 @@ Claude Code config (`settings.json`, rules, skills, agents, hooks, statusline) a
 
 - Edit these files in `~/dotfiles/`, not directly in `$HOME`
 - Run `stow . --no-folding` from `~/dotfiles` after changes
-- Claude Code secrets (API keys, Bedrock creds, etc.) live in `~/.claude.env`, gitignored and outside this repo. `~/.claude/settings.json` itself is stow-managed and free of secrets.
+- Claude Code secrets (API keys, Bedrock creds, etc.) live in `~/.zshenv.local`, gitignored and outside this repo. `~/.claude/settings.json` itself is stow-managed and free of secrets.

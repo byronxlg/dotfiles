@@ -47,7 +47,7 @@ claude-toggle-aws() {
       | .env.ANTHROPIC_MODEL = "global.anthropic.claude-sonnet-4-6"
       | .env.ANTHROPIC_DEFAULT_SONNET_MODEL = "global.anthropic.claude-sonnet-4-6"
       | .env.ANTHROPIC_DEFAULT_HAIKU_MODEL = "global.anthropic.claude-haiku-4-5-20251001-v1:0"
-      | .env.ANTHROPIC_DEFAULT_OPUS_MODEL = "global.anthropic.claude-opus-4-7"
+      | .env.ANTHROPIC_DEFAULT_OPUS_MODEL = "global.anthropic.claude-opus-4-6-v1"
       | .env.CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS = "1"' \
       "$settings" > "${settings}.tmp" && mv "${settings}.tmp" "$settings"
     echo "Claude: AWS Bedrock"
