@@ -25,7 +25,7 @@ gh search code --filename SKILL.md "<query>" --json repository,path,url --limit 
 site:github.com SKILL.md "<query>" claude code skill
 ```
 
-Combine and deduplicate results across both paths.
+Combine results across both paths. Deduplicate by `owner/repo + path` — if the same file appears from both searches, keep one entry.
 
 ### Step 2: Filter out aggregators and mirrors
 
@@ -38,18 +38,27 @@ Fetch star counts for surviving candidates:
 gh repo view <owner/repo> --json stargazerCount,description,isFork
 ```
 
-Prefer repos that are not forks and have meaningful star counts. Deprioritize (but don't discard) low-star repos from unknown authors.
+Prefer repos that are not forks. Treat star counts as a rough quality signal: 500+ is a good sign, under 50 is worth noting to the user. Deprioritize but don't discard low-star repos from unknown authors — surface them at the bottom of the list with a note.
 
 ### Step 3: Fetch SKILL.md content
 
-For each candidate, compute the raw URL:
+For each candidate, compute the raw URL by replacing `github.com` with `raw.githubusercontent.com` and dropping `/blob`:
+
 ```
 https://github.com/<owner>/<repo>/blob/<sha>/<path>
 ->
-https://raw.githubusercontent.com/<owner>/<repo>/main/<path>
+https://raw.githubusercontent.com/<owner>/<repo>/<sha>/<path>
 ```
 
-Use `curl -sf <raw-url>` to fetch and extract the `description:` field from the YAML frontmatter.
+The SHA is preserved as-is — do not substitute `main` or any branch name.
+
+Fetch the content and check it is non-empty before proceeding:
+```bash
+content=$(curl -sfL "<raw-url>")
+# abort this candidate if content is empty or curl failed
+```
+
+Extract the `description:` field from the YAML frontmatter of non-empty results.
 
 ### Step 4: Present options
 
@@ -76,10 +85,10 @@ If the user wants to install a skill:
 
 ```bash
 mkdir -p ~/.claude/skills/<name>
-curl -sf "<raw-url>" -o ~/.claude/skills/<name>/SKILL.md
+curl -sfL "<raw-url>" -o ~/.claude/skills/<name>/SKILL.md
 ```
 
-4. Confirm the file was written and show the installed skill name.
+4. Verify the install succeeded: check the file exists and is non-empty (`ls -la ~/.claude/skills/<name>/SKILL.md`). If empty or missing, report the failure — do not claim success.
 
 ## Listing installed skills
 
