@@ -1,7 +1,5 @@
 export BAT_THEME="Catppuccin Mocha"
 
-eval "$(direnv hook zsh)"
-
 # fzf: use fd so .env shows but ~/.config/fd/ignore filters out noise dirs
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --no-ignore-vcs'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
