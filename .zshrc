@@ -68,6 +68,7 @@ claude-use-aws() {
   export ANTHROPIC_DEFAULT_HAIKU_MODEL=global.anthropic.claude-haiku-4-5-20251001-v1:0
   export ANTHROPIC_DEFAULT_OPUS_MODEL=global.anthropic.claude-opus-4-6-v1
   export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+  export AZURE_DEFAULT_REMEMBER_ME=true
   sed -i '' '/^export CLAUDE_CODE_USE_BEDROCK=/d
 /^export AWS_REGION=/d
 /^export AWS_PROFILE=/d
@@ -76,6 +77,7 @@ claude-use-aws() {
 /^export ANTHROPIC_DEFAULT_HAIKU_MODEL=/d
 /^export ANTHROPIC_DEFAULT_OPUS_MODEL=/d
 /^export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=/d
+/^export AZURE_DEFAULT_REMEMBER_ME=/d
 /^export AWS_BEARER_TOKEN_BEDROCK=/d' "$env_file"
   cat >> "$env_file" <<'EOF'
 export CLAUDE_CODE_USE_BEDROCK=1
@@ -86,6 +88,7 @@ export ANTHROPIC_DEFAULT_SONNET_MODEL=global.anthropic.claude-sonnet-4-6
 export ANTHROPIC_DEFAULT_HAIKU_MODEL=global.anthropic.claude-haiku-4-5-20251001-v1:0
 export ANTHROPIC_DEFAULT_OPUS_MODEL=global.anthropic.claude-opus-4-6-v1
 export CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1
+export AZURE_DEFAULT_REMEMBER_ME=true
 EOF
   if [[ -n "$1" ]]; then
     export AWS_BEARER_TOKEN_BEDROCK="$1"
