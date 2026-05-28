@@ -60,6 +60,10 @@ doppler configs --project <name>
 
 **Headless machines**: set `DOPPLER_TOKEN` to a Doppler service token. The Doppler CLI checks this variable automatically.
 
+## CC_ prefix convention is retired
+
+A `CC_` prefix convention for Claude Code credentials (e.g. `CC_GH_TOKEN`) was briefly introduced and then reverted. Do not use or reference `CC_`-prefixed env vars. Use the Doppler-injected names directly (e.g. `GH_TOKEN`).
+
 ## Never revoke, delete, or rotate credentials without explicit instruction
 
 Revoking a credential is irreversible. Do not revoke, delete, or rotate any key - even one that appears superseded or unused - unless explicitly asked. The key may be in use by other tools, sessions, or people outside your visibility.
