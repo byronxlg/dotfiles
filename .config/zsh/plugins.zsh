@@ -1,13 +1,19 @@
-HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-/opt/homebrew}
-
 # ZSH Syntax Highlighting
-source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+else
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # ZSH Auto Suggestions
-source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    source "${HOMEBREW_PREFIX:-/opt/homebrew}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+else
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
 # Shell Completions
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
-eval "$(uv generate-shell-completion zsh)"
+[[ -x "$HOME/.local/bin/uv" ]] && eval "$($HOME/.local/bin/uv generate-shell-completion zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
