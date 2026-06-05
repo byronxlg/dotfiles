@@ -9,6 +9,14 @@
 chmod +x ./setup_macos.sh && ./setup_macos.sh
 ```
 
+## WSL Setup
+
+```bash
+bash setup/wsl.sh
+```
+
+Version pins for tools not in apt (`LAZYGIT_VERSION`, `YAZI_VERSION`, etc.) are at the top of `setup/wsl.sh` - update them before running on a new machine.
+
 ## Terminal Setup (MacOS)
 
 -   [iTerm2](https://iterm2.com/)

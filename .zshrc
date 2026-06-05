@@ -46,8 +46,10 @@ export LS_COLORS="$(vivid generate catppuccin-mocha)"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # PATH
-PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+    PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+fi
 PATH="$HOME/.local/bin:$PATH"
 
 # Source zshrc
@@ -119,7 +121,7 @@ claude-use-anthropic() {
 }
 
 # bun completions
-[ -s "/Users/byron.smith/.bun/_bun" ] && source "/Users/byron.smith/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
