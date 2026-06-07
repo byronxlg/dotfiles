@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "awsAuthRefresh": "aws-azure-login --enable-chrome-seamless-sso --no-prompt",
   "env": {
     "ENABLE_EXPERIMENTAL_MCP_CLI": "true",
     "NODE_TLS_REJECT_UNAUTHORIZED": "0"
@@ -15,15 +16,21 @@
       "Agent",
       "WebFetch",
       "WebSearch",
-      "mcp__*"
+      "mcp__atlassian__*",
+      "mcp__claude_ai_Atlassian_Rovo__*",
+      "mcp__claude_ai_Gmail__*",
+      "mcp__claude_ai_Google_Calendar__*",
+      "mcp__claude_ai_Google_Drive__*",
+      "mcp__plugin_context7_context7__*",
+      "mcp__plugin_figma_figma__*",
+      "mcp__plugin_playwright_playwright__*"
     ],
     "deny": [
       "Bash(rm -rf /)"
     ],
     "defaultMode": "bypassPermissions"
   },
-  "awsAuthRefresh": "aws-azure-login --enable-chrome-seamless-sso --no-prompt",
-  "model": "sonnet",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
