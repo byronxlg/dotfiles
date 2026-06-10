@@ -23,7 +23,8 @@
       "mcp__claude_ai_Google_Drive__*",
       "mcp__plugin_context7_context7__*",
       "mcp__plugin_figma_figma__*",
-      "mcp__plugin_playwright_playwright__*"
+      "mcp__plugin_playwright_playwright__*",
+      "mcp__miro__*"
     ],
     "deny": [
       "Bash(rm -rf /)"
