@@ -116,6 +116,9 @@ elif [ -f "$settings_path" ]; then
     [ -n "$bedrock_val" ] && use_bedrock="$bedrock_val"
 fi
 
+# Machine name
+host_name=$(hostname -s 2>/dev/null || hostname 2>/dev/null)
+
 # ===== Build single-line output =====
 out=""
 
@@ -125,6 +128,9 @@ case "$effort_level" in
     medium) effort_str="${peach}med${reset}" ;;
     *)      effort_str="${green}high${reset}" ;;
 esac
+if [ -n "$host_name" ]; then
+    out+=" ${dim}|${reset} ${mauve}${host_name}${reset}"
+fi
 out+=" ${dim}|${reset} "
 if [ "$use_bedrock" = "1" ]; then
     out+="${yellow}bedrock${reset} "
