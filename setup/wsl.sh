@@ -145,23 +145,11 @@ if ! command -v stylua &>/dev/null; then
     rm -rf "$tmp"
 fi
 
-# ─── Doppler ──────────────────────────────────────────────────────────────────
-if ! command -v doppler &>/dev/null; then
-    echo "Installing Doppler..."
-    curl -sLf --retry 3 --tlsv1.2 --proto "=https" \
-        'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' \
-        | sudo gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg
-    echo "deb [sign-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://packages.doppler.com/public/cli/deb/debian any-version main" \
-        | sudo tee /etc/apt/sources.list.d/doppler-cli.list
-    sudo apt-get update -q || echo "Warning: apt-get update had errors (continuing...)"
-    sudo apt-get install -y doppler
-fi
-
 # ─── Post-install setup ───────────────────────────────────────────────────────
-chmod +x "$SCRIPT_DIR"/*.sh
+chmod +x "$SCRIPT_DIR"/*.sh "$SCRIPT_DIR"/home/*.sh
 "$SCRIPT_DIR/bat.sh"
 "$SCRIPT_DIR/vscode.sh"
 
-# ─── Doppler login ────────────────────────────────────────────────────────────
-echo "Logging into Doppler (skip with Ctrl-C on headless machines)..."
-doppler login
+# ─── Doppler ──────────────────────────────────────────────────────────────────
+# Install + login (skip login with Ctrl-C on headless machines)
+"$SCRIPT_DIR/home/doppler.sh"
