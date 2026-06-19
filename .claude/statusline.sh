@@ -141,18 +141,29 @@ out+="${blue}${model_name}${reset} ${dim}(${reset}${effort_str}${dim})${reset}"
 cwd=$(echo "$input" | jq -r '.cwd // empty')
 if [ -n "$cwd" ]; then
     display_dir="${cwd##*/}"
-    git_branch=$(git --git-dir="${cwd}/.git" --no-optional-locks rev-parse --abbrev-ref HEAD 2>/dev/null)
+    git_dir="${cwd}/.git"
+    git_branch=$(git --git-dir="$git_dir" --no-optional-locks rev-parse --abbrev-ref HEAD 2>/dev/null)
+    worktree_name=$(echo "$input" | jq -r '.worktree.name // empty')
+
+    # In a worktree the cwd folder and worktree name both echo the branch.
+    # Show the parent repo's name as the dir instead, and mark it with a
+    # compact [wt] flag - the branch already identifies which worktree.
+    if [ -n "$worktree_name" ]; then
+        common_dir=$(git --git-dir="$git_dir" --no-optional-locks rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+        if [ -n "$common_dir" ]; then
+            repo_root="${common_dir%/.git}"
+            display_dir="${repo_root##*/}"
+        fi
+    fi
+
     out+=" ${dim}|${reset} "
     out+="${teal}${display_dir}${reset}"
     if [ -n "$git_branch" ]; then
         out+="${dim}@${reset}${green}${git_branch}${reset}"
-        git_stat=$(git --git-dir="${cwd}/.git" --no-optional-locks diff --numstat 2>/dev/null | awk '{a+=$1; d+=$2} END {if (a+d>0) printf "+%d -%d", a, d}')
+        git_stat=$(git --git-dir="$git_dir" --no-optional-locks diff --numstat 2>/dev/null | awk '{a+=$1; d+=$2} END {if (a+d>0) printf "+%d -%d", a, d}')
         [ -n "$git_stat" ] && out+=" ${dim}(${reset}${green}${git_stat%% *}${reset} ${red}${git_stat##* }${reset}${dim})${reset}"
     fi
-    worktree_name=$(echo "$input" | jq -r '.worktree.name // empty')
-    if [ -n "$worktree_name" ]; then
-        out+=" ${dim}[worktree: ${reset}${mauve}${worktree_name}${reset}${dim}]${reset}"
-    fi
+    [ -n "$worktree_name" ] && out+=" ${mauve}[wt]${reset}"
 fi
 
 out+=" ${dim}|${reset} "
