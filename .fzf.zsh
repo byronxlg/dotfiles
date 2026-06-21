@@ -1,6 +1,21 @@
-# Setup fzf
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+# Setup fzf - shell integration (key bindings + completion).
+# Portable across machines: prefer `fzf --zsh` (fzf >= 0.48), else source the
+# example scripts from whichever location this platform ships them in.
+if command -v fzf >/dev/null 2>&1; then
+  if fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)
+  else
+    for _fzf_dir in \
+      "$(brew --prefix 2>/dev/null)/opt/fzf/shell" \
+      /usr/share/doc/fzf/examples \
+      /usr/share/fzf \
+      /opt/homebrew/opt/fzf/shell; do
+      [[ -r "$_fzf_dir/key-bindings.zsh" ]] && source "$_fzf_dir/key-bindings.zsh"
+      [[ -r "$_fzf_dir/completion.zsh" ]] && source "$_fzf_dir/completion.zsh"
+    done
+    unset _fzf_dir
+  fi
+fi
 
 export FZF_CTRL_T_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
 export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git'
