@@ -81,7 +81,12 @@
   "tui": "default",
   "autoDreamEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-ansi",
   "verbose": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
