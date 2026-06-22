@@ -5,6 +5,10 @@
     "ENABLE_EXPERIMENTAL_MCP_CLI": "true",
     "NODE_TLS_REJECT_UNAUTHORIZED": "0"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
       "Bash",
@@ -84,9 +88,5 @@
   "theme": "dark-ansi",
   "verbose": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  }
+  "voiceEnabled": true
 }
