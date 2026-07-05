@@ -36,7 +36,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "opus",
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline.sh"
