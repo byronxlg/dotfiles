@@ -34,6 +34,11 @@ for file in $HOME/dotfiles/.config/zsh/*.zsh; do
     source $file
 done
 
+# Force emacs keybindings. zsh otherwise infers vi mode from $EDITOR=nvim,
+# which surfaces as Starship's 'V' vimcmd indicator. Must run before the
+# custom bindkeys below so they bind into the emacs keymap.
+bindkey -e
+
 # completion using arrow keys (based on history)
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
