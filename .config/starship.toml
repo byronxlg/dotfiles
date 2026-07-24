@@ -158,6 +158,8 @@ format = " [$symbol($version)]($style)"
 format = " [$symbol($version)]($style)"
 
 [hostname]
+# Always show the host; the ssh_symbol is what marks a remote session
+ssh_only = false
 ssh_symbol = " "
 
 [java]
