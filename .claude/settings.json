@@ -18,6 +18,8 @@
       "Glob",
       "Grep",
       "Agent",
+      "Artifact",
+      "Monitor",
       "WebFetch",
       "WebSearch",
       "mcp__atlassian__*",
@@ -46,6 +48,7 @@
     "skill-creator@claude-plugins-official": true,
     "context7@claude-plugins-official": true
   },
+  "skipWebFetchPreflight": true,
   "effortLevel": "high",
   "tui": "default",
   "autoDreamEnabled": true,
