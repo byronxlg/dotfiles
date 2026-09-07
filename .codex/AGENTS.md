@@ -1,6 +1,6 @@
 # Shared personal instructions
 
-Before starting work, read `~/.claude/CLAUDE.md` if present and every Markdown file under `~/.claude/rules/`. These are shared personal instructions for both Claude Code and Codex. Read only installed rules; do not load rules from other machines under `~/dotfiles/hosts/`.
+Before starting work, read `~/.claude/CLAUDE.md` if present and every Markdown file under `~/.claude/rules/`. These are shared personal instructions for both Claude Code and Codex. Follow symlinks when enumerating rule files (for example, `rg --files --hidden --follow ~/.claude/rules`). Read every resolved Markdown file and report broken links; do not use `find -type f` without following symlinks. Read only installed rules; do not load rules from other machines under `~/dotfiles/hosts/`.
 
 Codex instructions and shared skills are also managed in `~/dotfiles/` via GNU Stow. Edit their repository sources and run `stow . --no-folding` after changes.
 
