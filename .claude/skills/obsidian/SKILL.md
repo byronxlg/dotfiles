@@ -1,6 +1,6 @@
 ---
 name: obsidian
-description: Read, search, create, and modify notes in Byron's Obsidian vaults by editing the markdown files directly. Use whenever the user mentions Obsidian, "my vault", "my notes", a daily note, a journal entry, a project note, an MOC, or asks to find/save/update anything in a knowledge base - even if the word "Obsidian" is not used. There is a global vault at ~/repos/obsidian/, but Byron uses multiple vaults and this skill is not limited to one. Covers the content-quality rules for note writing, frontmatter conventions, wikilinks, daily notes, the read/write policy, and how to avoid breaking the graph.
+description: Read, search, create, and modify notes in Byron's Obsidian vaults by editing the markdown files directly. Use whenever the user mentions Obsidian, "my vault", "my notes", a daily note, a journal entry, a project note, an MOC, or asks to find/save/update anything in a knowledge base - even if the word "Obsidian" is not used. There is a global vault at ~/repos/byronxlg/obsidian/, but Byron uses multiple vaults and this skill is not limited to one. Covers the content-quality rules for note writing, frontmatter conventions, wikilinks, daily notes, the read/write policy, and how to avoid breaking the graph.
 ---
 
 # Obsidian vaults
@@ -11,7 +11,7 @@ This skill gives you the universal Obsidian mechanics and the user's content-qua
 
 ## Vaults
 
-There is a global vault at `~/repos/obsidian/`, used by default when no other vault is in play. This skill is not limited to it - Byron uses multiple vaults, and some live inside project repos. A vault root is any directory containing a `.obsidian/` folder. When it is unclear which vault a request means, ask.
+There is a global vault at `~/repos/byronxlg/obsidian/`, used by default when no other vault is in play. This skill is not limited to it - Byron uses multiple vaults, and some live inside project repos. A vault root is any directory containing a `.obsidian/` folder. When it is unclear which vault a request means, ask.
 
 When listing or searching a vault, exclude `.obsidian/` and `.git/`:
 
@@ -235,7 +235,7 @@ Notes tagged `moc` are index notes. Pick the children-index pattern by content s
 
 ## Proactive project lookup
 
-At the start of substantive work in a project repo, check the global vault for a project note before doing other work. Convention: `~/repos/obsidian/Projects/<repo-name>.md`, where `<repo-name>` is the cwd basename. Read it directly; a not-found error is the negative signal, handle it silently.
+At the start of substantive work in a project repo, check the global vault for a project note before doing other work. Convention: `~/repos/byronxlg/obsidian/Projects/<repo-name>.md`, where `<repo-name>` is the cwd basename. Read it directly; a not-found error is the negative signal, handle it silently.
 
 If the read succeeds, use the contents (decisions, conventions, pending TODOs, links) as context for the first substantive request. If it does not exist, continue without it - do not surface the absence unless asked, and do not create a note unsolicited. Skip this lookup entirely when the cwd is itself a vault root (the normal in-vault flow covers that). Strict path match only; do not fuzzy-search across folders.
 

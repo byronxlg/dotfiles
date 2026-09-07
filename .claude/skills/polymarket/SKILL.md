@@ -255,7 +255,7 @@ client.cancel_market_orders(market="<condition_id>", asset_id="<token_id>")
 
 After every successful order (place, partial fill, or cancel), write a note in the user's vault under:
 
-`/Users/byron/repos/obsidian/Byron/Prediction Markets/Polymarket/Trades/`
+`/Users/byron.smith/repos/byronxlg/obsidian/Byron/Prediction Markets/Polymarket/Trades/`
 
 The folder note `Trades/Trades.md` is the canonical source for the filename pattern, full frontmatter schema, body shape, and field conventions. Read it before writing a trade note and match its shape exactly — it owns the Bases view that depends on the schema.
 
