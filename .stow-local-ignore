@@ -33,3 +33,6 @@ setup_macos.sh
 README.md
 CLAUDE.md
 \.DS_Store
+
+# Repository instructions must not become global home instructions.
+^/AGENTS\.md$
