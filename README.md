@@ -56,13 +56,18 @@ bash setup/home/skills.sh
 ```
 
 Requires Node.js 20+ and a writable npm global prefix. The script runs the normal
-`npm install -g skillfold@2.4.1` and `skillfold install -g --frozen` commands.
+`npm install -g skillfold@2.5.0` and `skillfold install -g --frozen` commands.
 Doppler supplies GitHub authentication when available; public sources also work
 without a token, subject to GitHub's anonymous rate limit.
 
-Stow owns `.claude/skillfold.yaml` and `.claude/skillfold.lock`. Skillfold owns the
-installed skill directories, which are no longer tracked in dotfiles. The
-manifest selects 30 distinct skills: 28 for Claude and 23 for Codex.
+Stow links `.config/skillfold/skillfold.yaml` and `.config/skillfold/skillfold.lock`
+into `~/.config/skillfold/`. This one config selects 30 distinct skills: 28 for
+Claude and 23 for Codex. Skillfold owns the installed skill directories.
+
+Skillfold 2.5.0 uses this independent config location by default and supports
+`XDG_CONFIG_HOME`. To migrate an existing standalone config from `~/.claude`,
+run `skillfold migrate -g`, then `skillfold check -g`. This dotfiles setup uses
+the default `~/.config/skillfold/` location.
 
 ```sh
 skillfold list -g

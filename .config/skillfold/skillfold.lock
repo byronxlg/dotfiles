@@ -51,8 +51,8 @@ skills:
     integrity: sha256-EL0Usv55k+ew2rhp30uKoXTB86gtdcJslnTdK2OTgLo=
   find-skills:
     source: github:byronxlg/skills/skills/find-skills
-    resolved: github:byronxlg/skills/skills/find-skills@12ff7c49b47453c526daaaf09f18dd3e39b1438c
-    integrity: sha256-mgz48/KVoI+hdjPtRFAvr42vwloJkUYTvhmID2sgCWg=
+    resolved: github:byronxlg/skills/skills/find-skills@ebb880059511d08e3917ef900ce66251c58e8fcd
+    integrity: sha256-vFD3WeT0NToFEtweMo3RUI1iYdOhqZMY/G9UxWAXEaE=
   frontend-design:
     source: github:anthropics/skills/skills/frontend-design
     resolved: github:anthropics/skills/skills/frontend-design@41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f

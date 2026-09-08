@@ -1,7 +1,7 @@
 # Skill management
 
 Skillfold manages personal skills for Claude Code and Codex. Dotfiles owns
-`~/.claude/skillfold.yaml` and `~/.claude/skillfold.lock` through Stow.
+`~/.config/skillfold/skillfold.yaml` and `~/.config/skillfold/skillfold.lock` through Stow.
 Installed files in `~/.claude/skills` and `~/.agents/skills` are generated.
 
 - Personal sources belong in `byronxlg/skills`; edit and push them there.

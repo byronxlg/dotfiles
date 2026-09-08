@@ -8,7 +8,7 @@ When working in a repository that only has Claude instructions, read applicable 
 
 ## Shared skill compatibility
 
-- Skillfold manages shared skills in `~/.agents/skills/` and `~/.claude/skills/` from `~/dotfiles/.claude/skillfold.yaml` and its lockfile. Installed copies are generated; do not edit them.
+- Skillfold manages shared skills in `~/.agents/skills/` and `~/.claude/skills/` from `~/dotfiles/.config/skillfold/skillfold.yaml` and its lockfile. Installed copies are generated; do not edit them.
 - Personal skill sources live in the `byronxlg/skills` repository. Edit and push sources there, then run `skillfold update -g <name>` and `skillfold check -g`. Commit and push the updated dotfiles lockfile.
 - Add remote skills with `skillfold add -g <source>`; use per-skill `targets` for agent-specific skills.
 - In shared skill examples, `/skill-name` means invoke the corresponding Codex skill with `$skill-name`; `$ARGUMENTS` means the user's request and conversation context, not a literal shell variable.
