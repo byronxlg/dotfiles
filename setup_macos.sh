@@ -32,7 +32,7 @@ packages=(
 	postgresql@14
 	python@3.14
 	uv
-	# node
+	node
 
     # Other
 	'wget'
@@ -60,3 +60,5 @@ setup/bat.sh
 # Doppler (secret management): install + login
 setup/home/doppler.sh
 
+# Skills: published Skillfold CLI + locked Claude and Codex skills
+setup/home/skills.sh

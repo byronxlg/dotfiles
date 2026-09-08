@@ -3,3 +3,7 @@
 .claude/worktrees/
 .config/nvim/lazy-lock.json
 .playwright-cli/
+
+# Skillfold generates installed skills; sources live in byronxlg/skills or upstream.
+.claude/skills/
+.agents/skills/

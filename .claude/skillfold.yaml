@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://github.com/byronxlg/skillfold/raw/main/skillfold.schema.json
+# Personal sources: byronxlg/skills. Third-party sources: upstream repositories.
+targets: [claude, codex]
+skills:
+  analyze: github:anthropics/knowledge-work-plugins/data/skills/analyze
+  architecture: github:anthropics/knowledge-work-plugins/engineering/skills/architecture
+  data-visualization: github:anthropics/knowledge-work-plugins/data/skills/data-visualization
+  dbt: github:byronxlg/skills/skills/dbt
+  debug: github:anthropics/knowledge-work-plugins/engineering/skills/debug
+  deploy-checklist: github:anthropics/knowledge-work-plugins/engineering/skills/deploy-checklist
+  design-critique: github:anthropics/knowledge-work-plugins/design/skills/design-critique
+  doc-coauthoring:
+    source: github:anthropics/skills/skills/doc-coauthoring
+    targets: [claude]
+  documentation: github:anthropics/knowledge-work-plugins/engineering/skills/documentation
+  docx:
+    source: github:anthropics/skills/skills/docx
+    targets: [claude]
+  explore-data: github:anthropics/knowledge-work-plugins/data/skills/explore-data
+  find-skills: github:byronxlg/skills/skills/find-skills
+  frontend-design: github:anthropics/skills/skills/frontend-design
+  incident-response: github:anthropics/knowledge-work-plugins/engineering/skills/incident-response
+  issue:
+    source: github:byronxlg/skills/skills/issue
+    targets: [codex]
+  matplotlib: github:tvhahn/matplotlib-skill/skills/matplotlib
+  obsidian: github:byronxlg/skills/skills/obsidian
+  pdf:
+    source: github:anthropics/skills/skills/pdf
+    targets: [claude]
+  playwright-cli: github:microsoft/playwright-cli/skills/playwright-cli
+  polymarket: github:byronxlg/skills/skills/polymarket
+  pptx:
+    source: github:anthropics/skills/skills/pptx
+    targets: [claude]
+  project-idea-validator:
+    source: github:byronxlg/skills/skills/project-idea-validator
+    targets: [codex]
+  skill-creator:
+    source: github:anthropics/skills/skills/skill-creator
+    targets: [claude]
+  sql-queries: github:anthropics/knowledge-work-plugins/data/skills/sql-queries
+  system-design: github:anthropics/knowledge-work-plugins/engineering/skills/system-design
+  tech-debt: github:anthropics/knowledge-work-plugins/engineering/skills/tech-debt
+  testing-strategy: github:anthropics/knowledge-work-plugins/engineering/skills/testing-strategy
+  tts:
+    source: github:byronxlg/skills/skills/tts
+    targets: [claude]
+  webapp-testing: github:anthropics/skills/skills/webapp-testing
+  xlsx:
+    source: github:anthropics/skills/skills/xlsx
+    targets: [claude]

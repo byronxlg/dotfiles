@@ -153,3 +153,6 @@ chmod +x "$SCRIPT_DIR"/*.sh "$SCRIPT_DIR"/home/*.sh
 # ─── Doppler ──────────────────────────────────────────────────────────────────
 # Install + login (skip login with Ctrl-C on headless machines)
 "$SCRIPT_DIR/home/doppler.sh"
+
+# Skills: published Skillfold CLI + locked Claude and Codex skills
+"$SCRIPT_DIR/home/skills.sh"
