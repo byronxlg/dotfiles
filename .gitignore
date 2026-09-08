@@ -7,3 +7,7 @@
 # Skillfold generates installed skills; sources live in byronxlg/skills or upstream.
 .claude/skills/
 .agents/skills/
+
+# Skillfold generates installed rules and global Codex instructions.
+.claude/rules/
+.codex/AGENTS.md

@@ -88,6 +88,53 @@ skills:
     resolved: github:anthropics/skills/skills/xlsx@41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f
     integrity: sha256-B43Dd/ncR/7UoDXxkoeXCl5JWnQ7SHI/jEbw+X8wiew=
 compose: {}
+rules:
+  codex-compatibility:
+    targets:
+      - codex
+    source: github:byronxlg/skills/rules/codex-compatibility.md
+    resolved: github:byronxlg/skills/rules/codex-compatibility.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-32jKlVKRopiFo1gXiO9Fhrja//1bc1LR/b+usoCmifY=
+  communication-style:
+    source: github:byronxlg/skills/rules/communication-style.md
+    resolved: github:byronxlg/skills/rules/communication-style.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-MFZaIUUMuAvuyvegdseum0aR6TY4/XOKPF/TP6cAMek=
+  doppler:
+    source: github:byronxlg/skills/rules/doppler.md
+    resolved: github:byronxlg/skills/rules/doppler.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-y2taXQI66u6WfU6FNo2HcTJNHsnZrSx/OgVvogkjvBs=
+  doppler-secrets:
+    hosts:
+      - Byrons-Mac-mini
+    source: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md
+    resolved: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-XhkCJ2EBNG95ql2x79nSJO79b0Ye0csy/HTclPkDj0M=
+  dotfiles-workflow:
+    source: github:byronxlg/skills/rules/dotfiles-workflow.md
+    resolved: github:byronxlg/skills/rules/dotfiles-workflow.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-ryXAEc2sAL77mAyVrdJJ30K5SEi/C0GpPPQpj2Msml8=
+  infra-writes:
+    source: github:byronxlg/skills/rules/infra-writes.md
+    resolved: github:byronxlg/skills/rules/infra-writes.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-y3Fd6qfbnZnpCZKL7WUS4m5VIhO003agop4GYV6Ap+8=
+  kubectl-context:
+    source: github:byronxlg/skills/rules/kubectl-context.md
+    resolved: github:byronxlg/skills/rules/kubectl-context.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-MHs5K/ezhxXKEGlESS22wGgkuFb+9AwNct7ZJ5lrzxo=
+  skills:
+    source: github:byronxlg/skills/rules/skills.md
+    resolved: github:byronxlg/skills/rules/skills.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-MggrRRdx5nkxElfI83TQly2UglNpOq8JSmipWZVVkX4=
+  telegram:
+    hosts:
+      - Byrons-Mac-mini
+    source: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/telegram.md
+    resolved: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/telegram.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-cCfQREEgxZNt8QYGmdfrMiReTiLMkVSR4tkqNyYK7Tk=
+  tool-preferences:
+    source: github:byronxlg/skills/rules/tool-preferences.md
+    resolved: github:byronxlg/skills/rules/tool-preferences.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
+    integrity: sha256-5QGfyZyx4wBIueHDfMAtCOliXfvvdtM1h9KlgqFjE/4=
 targets:
   - claude
   - codex

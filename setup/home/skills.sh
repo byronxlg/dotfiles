@@ -1,8 +1,8 @@
 #!/bin/bash
-# Install Skillfold from npm and reproduce the user-level skill selection.
+# Install Skillfold from npm and reproduce the user-level skill and rule selection.
 set -euo pipefail
 
-SKILLFOLD_VERSION="2.5.0"
+SKILLFOLD_VERSION="2.6.0"
 DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 if ! command -v node >/dev/null || ! node -e 'process.exit(Number(process.versions.node.split(".")[0]) >= 20 ? 0 : 1)'; then

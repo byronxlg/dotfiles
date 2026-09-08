@@ -37,3 +37,22 @@ skills:
   xlsx:
     source: github:anthropics/skills/skills/xlsx
     targets: [claude]
+
+# Rule sources live in byronxlg/skills; Skillfold selects agents and hostnames.
+rules:
+  communication-style: github:byronxlg/skills/rules/communication-style.md
+  doppler: github:byronxlg/skills/rules/doppler.md
+  dotfiles-workflow: github:byronxlg/skills/rules/dotfiles-workflow.md
+  infra-writes: github:byronxlg/skills/rules/infra-writes.md
+  kubectl-context: github:byronxlg/skills/rules/kubectl-context.md
+  skills: github:byronxlg/skills/rules/skills.md
+  tool-preferences: github:byronxlg/skills/rules/tool-preferences.md
+  codex-compatibility:
+    source: github:byronxlg/skills/rules/codex-compatibility.md
+    targets: [codex]
+  doppler-secrets:
+    source: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md
+    hosts: [Byrons-Mac-mini]
+  telegram:
+    source: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/telegram.md
+    hosts: [Byrons-Mac-mini]
