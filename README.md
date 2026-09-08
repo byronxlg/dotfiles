@@ -61,8 +61,8 @@ Doppler supplies GitHub authentication when available; public sources also work
 without a token, subject to GitHub's anonymous rate limit.
 
 Stow links `.config/skillfold/skillfold.yaml` and `.config/skillfold/skillfold.lock`
-into `~/.config/skillfold/`. This one config selects 30 distinct skills: 28 for
-Claude and 23 for Codex. Skillfold owns the installed skill directories.
+into `~/.config/skillfold/`. This one config selects 17 distinct skills: 15 for
+Claude and 10 for Codex. Skillfold owns the installed skill directories.
 
 Skillfold 2.5.0 uses this independent config location by default and supports
 `XDG_CONFIG_HOME`. To migrate an existing standalone config from `~/.claude`,
