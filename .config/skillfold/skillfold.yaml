@@ -46,6 +46,7 @@ rules:
   infra-writes: github:byronxlg/skills/rules/infra-writes.md
   kubectl-context: github:byronxlg/skills/rules/kubectl-context.md
   tool-preferences: github:byronxlg/skills/rules/tool-preferences.md
+  project-notes: github:byronxlg/skills/rules/project-notes.md
   codex-compatibility:
     source: github:byronxlg/skills/rules/codex-compatibility.md
     targets: [codex]

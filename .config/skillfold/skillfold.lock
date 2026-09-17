@@ -37,8 +37,8 @@ skills:
     integrity: sha256-WZ4XBUv2+ZMjL5OnCAZ1PUSazjDVVjcs7VaMzLXZA2M=
   obsidian:
     source: github:byronxlg/skills/skills/obsidian
-    resolved: github:byronxlg/skills/skills/obsidian@12ff7c49b47453c526daaaf09f18dd3e39b1438c
-    integrity: sha256-I/v96gPyABprineZLxCYzHqu8ZXOFU+MGxHXhCytbaY=
+    resolved: github:byronxlg/skills/skills/obsidian@cec837be74ab6deb11b825aad6c4f07e5775e382
+    integrity: sha256-Xe1xbUiOCE8JX60tEd2rXfIHxJ9oNOBuZZp6KmfVMWo=
   pdf:
     targets:
       - claude
@@ -121,6 +121,10 @@ rules:
     source: github:byronxlg/skills/rules/kubectl-context.md
     resolved: github:byronxlg/skills/rules/kubectl-context.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
     integrity: sha256-MHs5K/ezhxXKEGlESS22wGgkuFb+9AwNct7ZJ5lrzxo=
+  project-notes:
+    source: github:byronxlg/skills/rules/project-notes.md
+    resolved: github:byronxlg/skills/rules/project-notes.md@cec837be74ab6deb11b825aad6c4f07e5775e382
+    integrity: sha256-QETNyMAMR06Zzt+c4mJyc2yaa1Ry1mEBTJHv9aYATwo=
   telegram:
     hosts:
       - Byrons-Mac-mini
