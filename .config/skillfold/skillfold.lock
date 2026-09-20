@@ -107,8 +107,8 @@ rules:
     hosts:
       - Byrons-Mac-mini
     source: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md
-    resolved: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md@94124664782f8382870a6f3c1f4745edbf292401
-    integrity: sha256-DDjKa0PV9cfTCrrhmGtnlcUpTnvn9v5BLSaxZCWDJ/E=
+    resolved: github:byronxlg/skills/rules/hosts/Byrons-Mac-mini/doppler-secrets.md@491f71d2b2477fb65c9600b16fac34154a7f0d16
+    integrity: sha256-QEk5C7fWmkhwBUGRSU12Hp3Dnb9U/xQXg6Bw1PCLavE=
   dotfiles-workflow:
     source: github:byronxlg/skills/rules/dotfiles-workflow.md
     resolved: github:byronxlg/skills/rules/dotfiles-workflow.md@c30ced0f1d551b62e153ebc8f810b4cc6df8758e
