@@ -2,6 +2,9 @@
 # Personal sources: byronxlg/skills. Third-party sources: upstream repositories.
 targets: [claude, codex]
 skills:
+  brag:
+    source: github:latent-spaces/brag/skills/brag
+    targets: [claude]
   dbt: github:byronxlg/skills/skills/dbt
   doc-coauthoring:
     source: github:anthropics/skills/skills/doc-coauthoring
@@ -11,6 +14,21 @@ skills:
     targets: [claude]
   find-skills: github:byronxlg/skills/skills/find-skills
   frontend-design: github:anthropics/skills/skills/frontend-design
+  hyperframes-animation:
+    source: github:heygen-com/hyperframes/skills/hyperframes-animation
+    targets: [claude]
+  hyperframes-cli:
+    source: github:heygen-com/hyperframes/skills/hyperframes-cli
+    targets: [claude]
+  hyperframes-core:
+    source: github:heygen-com/hyperframes/skills/hyperframes-core
+    targets: [claude]
+  hyperframes-creative:
+    source: github:heygen-com/hyperframes/skills/hyperframes-creative
+    targets: [claude]
+  hyperframes-keyframes:
+    source: github:heygen-com/hyperframes/skills/hyperframes-keyframes
+    targets: [claude]
   issue:
     source: github:byronxlg/skills/skills/issue
     targets: [codex]
