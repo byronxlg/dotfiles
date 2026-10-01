@@ -38,9 +38,7 @@ CLAUDE.md
 ^/AGENTS\.md$
 
 # Skillfold, not Stow, owns installed skill directories.
-^/\.claude/skills
 ^/\.agents/skills
 
 # Rule sources live in byronxlg/skills; Skillfold owns their installed outputs.
-^/\.claude/rules
 ^/\.codex/AGENTS\.md$

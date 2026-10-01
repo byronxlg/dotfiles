@@ -1,6 +1,8 @@
 ## Dotfiles
 
-This repo is managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory (`.config`, `.claude`, etc.) maps to `$HOME`.
+This repo is managed with [GNU Stow](https://www.gnu.org/software/stow/). Each top-level directory (`.config`, `.codex`, etc.) maps to `$HOME`.
+
+Claude Code's own config (`~/.claude/settings.json`, hooks, statusline, agents, commands) is deliberately not versioned here; it lives only in `~/.claude/`.
 
 ### Stow usage
 
