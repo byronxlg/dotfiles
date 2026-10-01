@@ -16,6 +16,12 @@ trust_level = "trusted"
 [projects."/Users/byron.smith/repos/north-wind-capital"]
 trust_level = "trusted"
 
+[projects."/Users/byron.smith/repos/north-wind-capital/north-wind-capital.github.io"]
+trust_level = "trusted"
+
+[projects."/Users/byron.smith/repos/slalom-interview-hub"]
+trust_level = "trusted"
+
 [desktop]
 followUpQueueMode = "steer"
 
@@ -60,17 +66,19 @@ enabled = true
 [plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
+[plugins."chrome@openai-bundled"]
+enabled = true
+
 [mcp_servers.node_repl]
-default_tools_approval_mode = "approve"
 args = []
-command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/byron.smith/.codex:/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/byron.smith/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 CODEX_HOME = "/Users/byron.smith/.codex"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 BROWSER_USE_TINYSKY_ENABLED = "1"
@@ -78,13 +86,12 @@ NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.901.51231"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/byron.smith/.codex/plugins/cache/openai-bundled/browser/26.901.51231/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+BROWSER_USE_CODEX_APP_VERSION = "26.903.61454"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/byron.smith/.codex/plugins/cache/openai-bundled/browser/26.903.61454/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
 SKY_CUA_SERVICE_PATH = "/Users/byron.smith/.codex/computer-use/Codex Computer Use.app"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [mcp_servers.computer-use]
-default_tools_approval_mode = "approve"
 command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
 args = ["mcp"]
 cwd = "."
@@ -93,9 +100,11 @@ enabled = false
 [tui]
 status_line = ["current-dir", "model", "reasoning", "hostname", "git-branch", "branch-changes", "permissions", "five-hour-limit"]
 status_line_use_colors = true
+screen_reader_detection_done = true
 
 [tui.model_availability_nux]
 gpt-6-astra = 4
+"gpt-6.1-sol" = 1
 
 [apps._default]
 default_tools_approval_mode = "approve"
@@ -104,3 +113,12 @@ open_world_enabled = true
 
 [notice]
 hide_full_access_warning = true
+
+[mcp_servers.atlassian]
+command = "/Users/byron.smith/.local/bin/uvx"
+args = ["mcp-atlassian", "--read-only"]
+env_vars = ["CONFLUENCE_USERNAME", "CONFLUENCE_API_TOKEN"]
+startup_timeout_sec = 60
+
+[mcp_servers.atlassian.env]
+CONFLUENCE_URL = "https://slalom.atlassian.net/wiki"
