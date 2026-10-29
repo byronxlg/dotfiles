@@ -55,6 +55,7 @@ skills:
   xlsx:
     source: github:anthropics/skills/skills/xlsx
     targets: [claude]
+  taste: github:Leonxlnx/taste-skill/skills/taste-skill
 
 # Rule sources live in byronxlg/skills; Skillfold selects agents and hostnames.
 rules:

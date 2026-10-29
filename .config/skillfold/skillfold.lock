@@ -107,6 +107,10 @@ skills:
     source: github:anthropics/skills/skills/skill-creator
     resolved: github:anthropics/skills/skills/skill-creator@41bbe19d1a1a7eaab5e7bb9050a417e5c6cffc8f
     integrity: sha256-sBawAR7pzui6Rt/tGczejx2ODqbtxg6pCzli016LATo=
+  taste:
+    source: github:Leonxlnx/taste-skill/skills/taste-skill
+    resolved: github:Leonxlnx/taste-skill/skills/taste-skill@12af471f627f866411b4bd785b19646d3672784c
+    integrity: sha256-Yn3pGMk6Rwh9nMCWErr3NZ1DcEV009Ek1bD307v006g=
   tts:
     targets:
       - claude
