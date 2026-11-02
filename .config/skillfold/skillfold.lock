@@ -139,6 +139,10 @@ rules:
     source: github:byronxlg/skills/rules/communication-style.md
     resolved: github:byronxlg/skills/rules/communication-style.md@64c3febed8b4e61f7026f42e554242aa952cf7fe
     integrity: sha256-MFZaIUUMuAvuyvegdseum0aR6TY4/XOKPF/TP6cAMek=
+  design-work:
+    source: github:byronxlg/skills/rules/design-work.md
+    resolved: github:byronxlg/skills/rules/design-work.md@e9da2967b41726cae117a0c4b6027ebc28a21270
+    integrity: sha256-HNRTJ3m5E2ACn0fZryYLnwfby73qDl3zkq0+3CE4hSc=
   doppler:
     source: github:byronxlg/skills/rules/doppler.md
     resolved: github:byronxlg/skills/rules/doppler.md@92e9e7600ec457527eb6208ccd0ed0225f544d59
