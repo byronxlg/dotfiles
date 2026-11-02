@@ -141,8 +141,8 @@ rules:
     integrity: sha256-MFZaIUUMuAvuyvegdseum0aR6TY4/XOKPF/TP6cAMek=
   design-work:
     source: github:byronxlg/skills/rules/design-work.md
-    resolved: github:byronxlg/skills/rules/design-work.md@e9da2967b41726cae117a0c4b6027ebc28a21270
-    integrity: sha256-HNRTJ3m5E2ACn0fZryYLnwfby73qDl3zkq0+3CE4hSc=
+    resolved: github:byronxlg/skills/rules/design-work.md@694833b0d9ff9922762bb374f7f6f45d38efc450
+    integrity: sha256-krE4QXio9wvc0XurgN+pQnkQUQIrJRn7MA6E+mg7tKs=
   doppler:
     source: github:byronxlg/skills/rules/doppler.md
     resolved: github:byronxlg/skills/rules/doppler.md@92e9e7600ec457527eb6208ccd0ed0225f544d59
